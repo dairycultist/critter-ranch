@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=7 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://bean.blend" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://bean.gd" id="1_fj7yv"]
+[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://bean_bleat.wav" id="3_tlwt5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
 size = Vector3(2.09, 3.235, 3.26)
@@ -14,7 +15,7 @@ size = Vector2(10, 10)
 [node name="World" type="Node3D"]
 
 [node name="Bean" type="RigidBody3D" parent="."]
-transform = Transform3D(0.5072312, 0.4782321, -0.7169453, 0.8163494, 3.7398017e-08, 0.5775585, 0.2762071, -0.8782334, -0.39040446, 0, 2.0459847, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7789023, 0)
 script = ExtResource("1_fj7yv")
 
 [node name="Mesh" parent="Bean" instance=ExtResource("1_f3sb7")]
@@ -23,6 +24,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6976862)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bean"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5502014, 0)
 shape = SubResource("BoxShape3D_fj7yv")
+
+[node name="BumpSound" type="AudioStreamPlayer3D" parent="Bean"]
+transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
+stream = ExtResource("3_tlwt5")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
