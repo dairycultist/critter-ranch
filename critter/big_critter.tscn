@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwjkx6oxx6gxv"]
+[gd_scene load_steps=8 format=3 uid="uid://cwjkx6oxx6gxv"]
 
+[ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_xquf5"]
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_xx047"]
 [ext_resource type="PackedScene" uid="uid://flv2badub0ej" path="res://critter/big_critter.blend" id="2_xx047"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_twcdn"]
@@ -15,6 +16,7 @@ height = 2.4
 radius = 0.8
 
 [node name="BigCritter" type="RigidBody3D"]
+physics_material_override = ExtResource("1_xquf5")
 can_sleep = false
 script = ExtResource("1_xx047")
 hop_speed_linear = 6.0

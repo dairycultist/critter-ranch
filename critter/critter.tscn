@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=11 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
+[ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_kscb4"]
 [ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://critter/critter.blend" id="2_udjov"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 
@@ -15,6 +16,16 @@ height = 0.75
 height = 0.5
 radius = 0.25
 
+[sub_resource type="Animation" id="Animation_kscb4"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/Cylinder")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 2.2, 0)
+
 [sub_resource type="Animation" id="Animation_ia0t7"]
 resource_name = "idle"
 loop_mode = 1
@@ -26,16 +37,6 @@ tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0, 2.2, 0, 0.5, 1, 0, 2.0179727, 0.0897665, 1, 1, 0, 2.2, 0)
 
-[sub_resource type="Animation" id="Animation_kscb4"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh/Cylinder")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 2.2, 0)
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kscb4"]
 _data = {
 &"RESET": SubResource("Animation_kscb4"),
@@ -43,11 +44,14 @@ _data = {
 }
 
 [node name="Critter" type="RigidBody3D"]
+physics_material_override = ExtResource("1_kscb4")
 can_sleep = false
+angular_damp_mode = 1
+angular_damp = 1.0
 script = ExtResource("1_7qwah")
 
 [node name="Mesh" parent="." instance=ExtResource("2_udjov")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.31488103, 0.21504557)
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226, 0)

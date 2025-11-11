@@ -10,6 +10,14 @@ var active := true
 
 var material : Material
 
+enum ActivityState {
+	IDLING,
+	RESTING,
+	WALKING
+}
+
+var activity_state := ActivityState.WALKING
+
 func _ready() -> void:
 	
 	# duplicate our material so we can modify it
@@ -40,22 +48,35 @@ func _process(delta: float) -> void:
 		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 		$MeowSound.play()
 	
-	# TODO walking around/idling in one place
-	
-	# self-righting
-	if active and linear_velocity.length() < 0.01 and angular_velocity.length() < 0.01:
-		_right_self_if_necessary()
-
-func _right_self_if_necessary():
-	
-	var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
+	# activity
+	if active:
 		
-	if angle_to_upright > 0.3:
+		var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
 		
-		# hop upright
-		var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
+		if angle_to_upright > 0.3:
+			
+			# attempt to hop upright
+			if linear_velocity.length() < 0.01 and angular_velocity.length() < 0.01:
+			
+				var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
+				
+				var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
+				
+				apply_torque_impulse(righting_rot * hop_speed_angular)
+				apply_central_impulse(Vector3(0, hop_speed_linear, 0))
 		
-		var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
+		else:
 		
-		apply_torque_impulse(righting_rot * hop_speed_angular)
-		apply_central_impulse(Vector3(0, hop_speed_linear, 0))
+			# probably grounded, do movement behaviour
+			if linear_velocity.y < 0:
+				
+				# walking around, idling in one place...
+				
+				match activity_state:
+					
+					ActivityState.WALKING:
+						if (linear_velocity.length() < 1.0):
+							apply_central_force(global_basis.z * 50 * delta)
+					
+		# linear drag (angular drag is handled by rigidbody's angular damp)
+		apply_central_force(-linear_velocity * delta)
