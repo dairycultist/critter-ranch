@@ -2,16 +2,16 @@ extends RigidBody3D
 
 @export var hop_speed := 7.0
 
-var hop_timer = 5.0
 var meow_timer = 3.0
+var active := true
 
 func set_active(value : bool):
 	
+	active = value
 	freeze = not value
 	$CollisionFeet.disabled = not value
 	$CollisionBody.disabled = not value
 	$CollisionHead.disabled = not value
-	hop_timer = 5.0
 
 func _process(delta: float) -> void:
 	
@@ -21,27 +21,20 @@ func _process(delta: float) -> void:
 	if (meow_timer < 0):
 		meow_timer = randi_range(3, 12)
 		$MeowSound.volume_linear = randf() * 0.5 + 0.5
-		$MeowSound.pitch_scale = randf() * 0.1 + 0.9
+		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 		$MeowSound.play()
 	
-	# hopping
-	if freeze == false:
-		hop_timer -= delta
+	# TODO walking around/idling in one place
 	
-	if (hop_timer < 0):
-		hop_timer = 5.0
-		_hop()
+	# self-righting
+	if active and linear_velocity.length() < 0.01 and angular_velocity.length() < 0.01:
+		_right_self_if_necessary()
 
-func _hop():
+func _right_self_if_necessary():
 	
 	var angle_to_upright = acos(basis.y.dot(Vector3(0, 1, 0)))
 		
-	if angle_to_upright < 0.1:
-		
-		# hop forward
-		apply_central_impulse(Vector3(0, hop_speed, 0) + basis.z * hop_speed / 2)
-		
-	else:
+	if angle_to_upright > 0.1:
 		
 		# hop upright
 		var axis_to_upright = basis.y.cross(Vector3(0, 1, 0)).normalized()
