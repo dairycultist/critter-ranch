@@ -3,8 +3,22 @@ extends RigidBody3D
 @export var hop_speed_linear := 4.0
 @export var hop_speed_angular := 0.1
 
-var meow_timer = 3.0
+@export var hold_distance := 1.0
+
+var meow_timer := 3.0
 var active := true
+
+var material : Material
+
+func _ready() -> void:
+	
+	# duplicate our material so we can modify it
+	material = $Mesh.get_child(0).get_active_material(0).duplicate()
+	
+	# assign the material to every submesh of our mesh
+	for child in $Mesh.get_children():
+		
+		child.set_surface_override_material(0, material)
 
 func set_active(value : bool):
 	
@@ -13,6 +27,7 @@ func set_active(value : bool):
 	$CollisionFeet.disabled = not value
 	$CollisionBody.disabled = not value
 	$CollisionHead.disabled = not value
+	material.set_shader_parameter("transparent", not value)
 
 func _process(delta: float) -> void:
 	

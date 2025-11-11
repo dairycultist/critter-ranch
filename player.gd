@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 				
 				grabbed_critter.set_active(false)
 				grabbed_critter.reparent(self)
-				grabbed_critter.position = Vector3(0, 1, -2.5)
+				grabbed_critter.position = Vector3(0, 1, -grabbed_critter.hold_distance)
 				grabbed_critter.rotation = Vector3.ZERO
 	
 	if grabbed_critter:

@@ -19,6 +19,7 @@ can_sleep = false
 script = ExtResource("1_xx047")
 hop_speed_linear = 6.0
 hop_speed_angular = 0.5
+hold_distance = 2.2
 
 [node name="Mesh" parent="." instance=ExtResource("2_xx047")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -1.0294858, 0.26329553)
