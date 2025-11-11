@@ -6,13 +6,12 @@ var hop_timer = 5.0
 
 var prev_speed := 0.0
 
-func _ready() -> void:
-	
-	self.freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
-
 func set_active(value : bool):
 	
-	self.freeze = value
+	freeze = not value
+	$CollisionFeet.disabled = not value
+	$CollisionBody.disabled = not value
+	$CollisionHead.disabled = not value
 	hop_timer = 5.0
 
 func _process(delta: float) -> void:

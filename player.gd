@@ -1,5 +1,8 @@
 extends CharacterBody3D
 
+var grab_swing_amount := 0.0
+var grabbed_critter : Node3D
+
 var camera_pitch := 0.0
 
 @export_group("Movement")
@@ -19,18 +22,34 @@ func _process(delta: float) -> void:
 		position = Vector3(0, 10, 0)
 		velocity = Vector3.ZERO
 		
-	# picking up beans
+	# picking up critters
 	if (Input.is_action_just_pressed("fire")):
 		
-		var ray_result = get_world_3d().direct_space_state.intersect_ray(
-			PhysicsRayQueryParameters3D.create(
-				$Camera3D.global_position,
-				$Camera3D.global_position + $Camera3D.global_basis.z * -10
-			)
-		)
+		if grabbed_critter:
+			
+			grabbed_critter.reparent(get_tree().current_scene)
+			grabbed_critter.set_active(true)
 		
-		if ray_result:
-			print(ray_result)
+		else:
+		
+			var ray_result = get_world_3d().direct_space_state.intersect_ray(
+				PhysicsRayQueryParameters3D.create(
+					$Camera3D.global_position,
+					$Camera3D.global_position + $Camera3D.global_basis.z * -10
+				)
+			)
+			
+			if ray_result and ray_result.collider.has_method("set_active"):
+				
+				grabbed_critter = ray_result.collider
+				
+				grabbed_critter.set_active(false)
+				grabbed_critter.reparent($GrabAnchor)
+				grabbed_critter.position = Vector3.ZERO
+				grabbed_critter.rotation = Vector3.ZERO
+	
+	$GrabAnchor.rotation.z = lerp($GrabAnchor.rotation.z, grab_swing_amount, delta * 10)
+	grab_swing_amount = lerp(grab_swing_amount, 0.0, delta * 10)
 	
 	# movement
 	var input_dir := Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down")
@@ -66,3 +85,4 @@ func _input(event):
 		camera_pitch = clampf(camera_pitch - event.relative.y * mouse_sensitivity, -90, 90)
 		
 		$Camera3D.rotation.x = deg_to_rad(camera_pitch)
+		grab_swing_amount = deg_to_rad(-event.relative.x * mouse_sensitivity * -4)
