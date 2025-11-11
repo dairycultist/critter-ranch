@@ -19,18 +19,18 @@ radius = 0.25
 script = ExtResource("1_7qwah")
 
 [node name="Mesh" parent="." instance=ExtResource("2_udjov")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.32546043, 0.18165886)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.325, 0.216)
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22615623, -0.034186244)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226, 0)
 shape = SubResource("BoxShape3D_fj7yv")
 
 [node name="CollisionBody" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.014930725, -0.037653804)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.015, 0)
 shape = SubResource("CapsuleShape3D_tlwt5")
 
 [node name="CollisionHead" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22728729, 0.17857766)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.227, 0.213)
 shape = SubResource("CylinderShape3D_aqk2v")
 
 [node name="BumpSound" type="AudioStreamPlayer3D" parent="."]

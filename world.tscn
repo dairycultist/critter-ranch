@@ -13,7 +13,7 @@ size = Vector2(10, 10)
 [node name="World" type="Node3D"]
 
 [node name="Bean" parent="." instance=ExtResource("1_fj7yv")]
-transform = Transform3D(0.16316544, -0.7704375, -0.6162818, -0.12352252, -0.6356903, 0.76199734, -0.97883564, -0.04820694, -0.19888912, 0, 4.861724, 0)
+transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 4.861724, 0)
 hop_speed = 4.0
 
 [node name="Floor" type="StaticBody3D" parent="."]

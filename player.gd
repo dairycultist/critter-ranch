@@ -18,6 +18,19 @@ func _process(delta: float) -> void:
 	if (position.y < -10):
 		position = Vector3(0, 10, 0)
 		velocity = Vector3.ZERO
+		
+	# picking up beans
+	if (Input.is_action_just_pressed("fire")):
+		
+		var ray_result = get_world_3d().direct_space_state.intersect_ray(
+			PhysicsRayQueryParameters3D.create(
+				$Camera3D.global_position,
+				$Camera3D.global_position + $Camera3D.global_basis.z * -10
+			)
+		)
+		
+		if ray_result:
+			print(ray_result)
 	
 	# movement
 	var input_dir := Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down")
@@ -36,7 +49,6 @@ func _process(delta: float) -> void:
 	velocity.z = lerp(velocity.z, 0.0, delta * drag)
 	
 	move_and_slide()
-
 
 func _input(event):
 	
