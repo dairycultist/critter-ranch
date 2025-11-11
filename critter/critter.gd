@@ -13,10 +13,12 @@ var material : Material
 enum ActivityState {
 	IDLING,
 	RESTING,
-	WALKING
+	WALKING_STRAIGHT,
+	WALKING_LEFT,
+	WALKING_RIGHT
 }
 
-var activity_state := ActivityState.WALKING
+var activity_state := ActivityState.WALKING_LEFT
 
 func _ready() -> void:
 	
@@ -48,8 +50,11 @@ func _process(delta: float) -> void:
 		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 		$MeowSound.play()
 	
-	# activity
-	if active:
+	# activity (probably grounded)
+	if active and linear_velocity.y < 0 and linear_velocity.y > -0.01:
+		
+		# linear drag (angular drag is handled by rigidbody's angular damp)
+		apply_central_force(-linear_velocity * 500 * delta)
 		
 		var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
 		
@@ -66,17 +71,31 @@ func _process(delta: float) -> void:
 				apply_central_impulse(Vector3(0, hop_speed_linear, 0))
 		
 		else:
-		
-			# probably grounded, do movement behaviour
-			if linear_velocity.y < 0:
 				
-				# walking around, idling in one place...
+			# movement behaviour, walking around, idling in one place...
+			
+			const MAX_SPEED = 1.0
+			const MAX_TURN_SPEED = 0.3
+			
+			match activity_state:
 				
-				match activity_state:
+				ActivityState.WALKING_STRAIGHT:
 					
-					ActivityState.WALKING:
-						if (linear_velocity.length() < 1.0):
-							apply_central_force(global_basis.z * 50 * delta)
+					if (linear_velocity.length() < MAX_SPEED):
+						apply_central_force(global_basis.z * 500 * delta)
+				
+				ActivityState.WALKING_LEFT:
 					
-		# linear drag (angular drag is handled by rigidbody's angular damp)
-		apply_central_force(-linear_velocity * delta)
+					if (linear_velocity.length() < MAX_SPEED):
+						apply_central_force(global_basis.z * 500 * delta)
+					
+					if (abs(angular_velocity.y) < MAX_TURN_SPEED):
+						apply_torque(Vector3(0, -50 * delta, 0))
+				
+				ActivityState.WALKING_RIGHT:
+					
+					if (linear_velocity.length() < MAX_SPEED):
+						apply_central_force(global_basis.z * 500 * delta)
+					
+					if (abs(angular_velocity.y) < MAX_TURN_SPEED):
+						apply_torque(Vector3(0, 50 * delta, 0))
