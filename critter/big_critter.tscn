@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwjkx6oxx6gxv"]
+
+[ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_xx047"]
+[ext_resource type="PackedScene" uid="uid://flv2badub0ej" path="res://critter/big_critter.blend" id="2_xx047"]
+[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_twcdn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
+size = Vector3(1.433, 0.226, 1.99)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tlwt5"]
+radius = 1.05
+height = 2.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xquf5"]
+radius = 0.8
+
+[node name="BigCritter" type="RigidBody3D"]
+script = ExtResource("1_xx047")
+
+[node name="Mesh" parent="." instance=ExtResource("2_xx047")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -1.0294858, 0.26329553)
+
+[node name="CollisionFeet" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.93422234, 0)
+shape = SubResource("BoxShape3D_fj7yv")
+
+[node name="CollisionBody" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.09608863, 0)
+shape = SubResource("CapsuleShape3D_tlwt5")
+
+[node name="CollisionHead" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28907895, 0.84032357)
+shape = SubResource("SphereShape3D_xquf5")
+
+[node name="MeowSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
+stream = ExtResource("3_twcdn")

@@ -3,8 +3,7 @@ extends RigidBody3D
 @export var hop_speed := 7.0
 
 var hop_timer = 5.0
-
-var prev_speed := 0.0
+var meow_timer = 3.0
 
 func set_active(value : bool):
 	
@@ -16,18 +15,14 @@ func set_active(value : bool):
 
 func _process(delta: float) -> void:
 	
-	# sounds based on speed change
-	var curr_speed := linear_velocity.length()
+	# random meowing
+	meow_timer -= delta
 	
-	if curr_speed < 0.01 and prev_speed > 0.01:
-		
-		var volume := 1.0 - 1.0 / (prev_speed * 0.1 + 1.0) # map to [0,1]
-		
-		$BumpSound.volume_linear = volume
-		$BumpSound.pitch_scale = volume / 10 + 0.9
-		$BumpSound.play()
-	
-	prev_speed = curr_speed
+	if (meow_timer < 0):
+		meow_timer = randi_range(3, 12)
+		$MeowSound.volume_linear = randf() * 0.5 + 0.5
+		$MeowSound.pitch_scale = randf() * 0.1 + 0.9
+		$MeowSound.play()
 	
 	# hopping
 	if freeze == false:

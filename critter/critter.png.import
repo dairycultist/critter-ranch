@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bt7ajpq2lxcuf"
-path.s3tc="res://.godot/imported/bean.png-e0069aa0831fdba3563da25604538fc5.s3tc.ctex"
+path.s3tc="res://.godot/imported/critter.png-f47e77a5d7317c054dc4555b5c1c8bf8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://bean.png"
-dest_files=["res://.godot/imported/bean.png-e0069aa0831fdba3563da25604538fc5.s3tc.ctex"]
+source_file="res://critter/critter.png"
+dest_files=["res://.godot/imported/critter.png-f47e77a5d7317c054dc4555b5c1c8bf8.s3tc.ctex"]
 
 [params]
 

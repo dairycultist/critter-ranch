@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dbovgacj5pmv8"
-path="res://.godot/imported/bean.blend-26ff50b227a8fef727d2d1d915256e43.scn"
+path="res://.godot/imported/critter.blend-6f1920095eb9dfca2422bb5f96a034c4.scn"
 
 [deps]
 
-source_file="res://bean.blend"
-dest_files=["res://.godot/imported/bean.blend-26ff50b227a8fef727d2d1d915256e43.scn"]
+source_file="res://critter/critter.blend"
+dest_files=["res://.godot/imported/critter.blend-6f1920095eb9dfca2422bb5f96a034c4.scn"]
 
 [params]
 

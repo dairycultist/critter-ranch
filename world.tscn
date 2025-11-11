@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=7 format=3 uid="uid://bk28lx65ha5ck"]
 
-[ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://bean.tscn" id="1_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://cwjkx6oxx6gxv" path="res://critter/big_critter.tscn" id="3_tlwt5"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3sb7"]
@@ -12,7 +13,10 @@ size = Vector2(10, 10)
 
 [node name="World" type="Node3D"]
 
-[node name="Bean" parent="." instance=ExtResource("1_fj7yv")]
+[node name="BigCritter" parent="." instance=ExtResource("3_tlwt5")]
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -2, 3, 3)
+
+[node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 4.861724, 0)
 hop_speed = 4.0
 

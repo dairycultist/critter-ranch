@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://byit7avap3ofs"
-path="res://.godot/imported/bean_bleat.wav-b3ec95a5bcc28aabfacb3511b30f6200.sample"
+path="res://.godot/imported/critter_meow.wav-2f42af14bd38a2ebc79f446627834274.sample"
 
 [deps]
 
-source_file="res://bean_bleat.wav"
-dest_files=["res://.godot/imported/bean_bleat.wav-b3ec95a5bcc28aabfacb3511b30f6200.sample"]
+source_file="res://critter/critter_meow.wav"
+dest_files=["res://.godot/imported/critter_meow.wav-2f42af14bd38a2ebc79f446627834274.sample"]
 
 [params]
 

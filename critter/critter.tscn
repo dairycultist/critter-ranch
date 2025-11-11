@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bnen3v6e8xqv2"]
 
-[ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://bean.gd" id="1_7qwah"]
-[ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://bean.blend" id="2_udjov"]
-[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://bean_bleat.wav" id="3_whphh"]
+[ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
+[ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://critter/critter.blend" id="2_udjov"]
+[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
 size = Vector3(0.523, 0.226, 0.54)
@@ -15,7 +15,7 @@ height = 0.75
 height = 0.5
 radius = 0.25
 
-[node name="Bean" type="RigidBody3D"]
+[node name="Critter" type="RigidBody3D"]
 script = ExtResource("1_7qwah")
 
 [node name="Mesh" parent="." instance=ExtResource("2_udjov")]
@@ -33,6 +33,6 @@ shape = SubResource("CapsuleShape3D_tlwt5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.227, 0.213)
 shape = SubResource("CylinderShape3D_aqk2v")
 
-[node name="BumpSound" type="AudioStreamPlayer3D" parent="."]
+[node name="MeowSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
 stream = ExtResource("3_whphh")
