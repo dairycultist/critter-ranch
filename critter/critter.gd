@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 	
 	if (meow_timer < 0):
 		meow_timer = randi_range(3, 12)
-		$MeowSound.volume_linear = randf() * 0.5 + 0.5
+		$MeowSound.volume_linear = randf() * 0.1 + 0.1
 		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 		$MeowSound.play()
 	
