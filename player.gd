@@ -29,6 +29,8 @@ func _process(delta: float) -> void:
 			
 			grabbed_critter.reparent(get_tree().current_scene)
 			grabbed_critter.set_active(true)
+			
+			grabbed_critter = null
 		
 		else:
 		
