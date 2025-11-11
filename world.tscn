@@ -14,7 +14,7 @@ size = Vector2(10, 10)
 [node name="World" type="Node3D"]
 
 [node name="Bean" type="RigidBody3D" parent="."]
-transform = Transform3D(-0.32177, 0.9468179, -1.4065012e-08, 4.371139e-08, 1.9106855e-15, -1, -0.9468179, -0.32177, -4.1386723e-08, 0, 2.757729, 0)
+transform = Transform3D(0.5072312, 0.4782321, -0.7169453, 0.8163494, 3.7398017e-08, 0.5775585, 0.2762071, -0.8782334, -0.39040446, 0, 2.0459847, 0)
 script = ExtResource("1_fj7yv")
 
 [node name="Mesh" parent="Bean" instance=ExtResource("1_f3sb7")]
