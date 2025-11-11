@@ -16,6 +16,7 @@ height = 0.5
 radius = 0.25
 
 [node name="Critter" type="RigidBody3D"]
+can_sleep = false
 script = ExtResource("1_7qwah")
 
 [node name="Mesh" parent="." instance=ExtResource("2_udjov")]

@@ -1,6 +1,7 @@
 extends RigidBody3D
 
-@export var hop_speed := 7.0
+@export var hop_speed_linear := 4.0
+@export var hop_speed_angular := 0.1
 
 var meow_timer = 3.0
 var active := true
@@ -32,14 +33,14 @@ func _process(delta: float) -> void:
 
 func _right_self_if_necessary():
 	
-	var angle_to_upright = acos(basis.y.dot(Vector3(0, 1, 0)))
+	var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
 		
-	if angle_to_upright > 0.1:
+	if angle_to_upright > 0.3:
 		
 		# hop upright
-		var axis_to_upright = basis.y.cross(Vector3(0, 1, 0)).normalized()
+		var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
 		
 		var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
 		
-		apply_torque_impulse(righting_rot * hop_speed / 40.0) # idk
-		apply_central_impulse(Vector3(0, hop_speed, 0))
+		apply_torque_impulse(righting_rot * hop_speed_angular)
+		apply_central_impulse(Vector3(0, hop_speed_linear, 0))

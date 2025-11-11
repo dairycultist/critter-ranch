@@ -46,11 +46,12 @@ func _process(delta: float) -> void:
 				grabbed_critter = ray_result.collider
 				
 				grabbed_critter.set_active(false)
-				grabbed_critter.reparent($GrabAnchor)
-				grabbed_critter.position = Vector3.ZERO
+				grabbed_critter.reparent(self)
+				grabbed_critter.position = Vector3(0, 1, -2.5)
 				grabbed_critter.rotation = Vector3.ZERO
 	
-	$GrabAnchor.rotation.z = lerp($GrabAnchor.rotation.z, grab_swing_amount, delta * 10)
+	if grabbed_critter:
+		grabbed_critter.rotation.z = lerp(grabbed_critter.rotation.z, grab_swing_amount, delta * 10)
 	grab_swing_amount = lerp(grab_swing_amount, 0.0, delta * 10)
 	
 	# movement
