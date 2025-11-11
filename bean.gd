@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+@export var hop_speed := 7.0
+
 var hop_timer = 5.0
 
 var prev_speed := 0.0
@@ -33,7 +35,7 @@ func hop():
 	if (angle_to_upright < 0.001):
 		
 		# hop forward
-		apply_central_impulse(Vector3(0, 7, 0) + basis.z * 4)
+		apply_central_impulse(Vector3(0, hop_speed, 0) + basis.z * hop_speed / 2)
 		
 	else:
 		
@@ -42,5 +44,5 @@ func hop():
 		
 		var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
 		
-		apply_torque_impulse(righting_rot)
-		apply_central_impulse(Vector3(0, 7, 0))
+		apply_torque_impulse(righting_rot * hop_speed / 40.0) # idk
+		apply_central_impulse(Vector3(0, hop_speed, 0))

@@ -1,48 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=6 format=3 uid="uid://bk28lx65ha5ck"]
 
-[ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://bean.blend" id="1_f3sb7"]
-[ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://bean.gd" id="1_fj7yv"]
-[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://bean_bleat.wav" id="3_tlwt5"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
-size = Vector3(2.09, 0.903, 2.161)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tlwt5"]
-radius = 1.0
-height = 3.0
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_aqk2v"]
-radius = 1.0
+[ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://bean.tscn" id="1_fj7yv"]
+[ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3sb7"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fj7yv"]
 size = Vector2(10, 10)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_036b0"]
+
 [node name="World" type="Node3D"]
 
-[node name="Bean" type="RigidBody3D" parent="."]
-transform = Transform3D(-0.36337063, -0.2532485, -0.896564, -0.031067856, -0.9585163, 0.28333944, -0.93112653, 0.13081154, 0.34042877, 0, 4.861724, 0)
-script = ExtResource("1_fj7yv")
-
-[node name="Mesh" parent="Bean" instance=ExtResource("1_f3sb7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6976862)
-
-[node name="CollisionFeet" type="CollisionShape3D" parent="Bean"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40429306, -0.17461908)
-shape = SubResource("BoxShape3D_fj7yv")
-
-[node name="CollisionBody" type="CollisionShape3D" parent="Bean"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.2760737, -0.17461908)
-shape = SubResource("CapsuleShape3D_tlwt5")
-
-[node name="CollisionBody2" type="CollisionShape3D" parent="Bean"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2100537, 0.72123814)
-shape = SubResource("CylinderShape3D_aqk2v")
-
-[node name="BumpSound" type="AudioStreamPlayer3D" parent="Bean"]
-transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
-stream = ExtResource("3_tlwt5")
+[node name="Bean" parent="." instance=ExtResource("1_fj7yv")]
+transform = Transform3D(0.16316544, -0.7704375, -0.6162818, -0.12352252, -0.6356903, 0.76199734, -0.97883564, -0.04820694, -0.19888912, 0, 4.861724, 0)
+hop_speed = 4.0
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -52,8 +24,17 @@ shape = SubResource("WorldBoundaryShape3D_f3sb7")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("PlaneMesh_fj7yv")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.7071068, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, 0.7071068, 6, 4, 6)
-
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.1852953, -0.9330126, 0.30846876, 0.24999999, 0.25881904, 0.93301266, -0.9503503, 0.25000006, 0.18529518, 0, 0, 0)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3)
+script = ExtResource("4_aqk2v")
+jump_speed = 4.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_036b0")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
