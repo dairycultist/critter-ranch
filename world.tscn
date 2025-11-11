@@ -14,7 +14,7 @@ size = Vector2(10, 10)
 [node name="World" type="Node3D"]
 
 [node name="BigCritter" parent="." instance=ExtResource("3_tlwt5")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -2, 3, 3)
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -2, 1.4867992, 3)
 
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 4.861724, 0)
