@@ -1,9 +1,11 @@
 extends RigidBody3D
 
-@export var hop_speed_linear := 4.0
-@export var hop_speed_angular := 0.1
+@export var _HOP_SPEED_LINEAR := 4.0
+@export var _HOP_SPEED_ANGULAR := 0.1
 
 @export var _HOLD_DISTANCE := 1.0
+
+@export var _START_SCALE := 1.0
 
 var meow_timer : float
 var active := true
@@ -32,10 +34,17 @@ func _ready() -> void:
 	
 	animation = $Animated/AnimationPlayer
 	
-	curr_scale = 1 # start at x1 scale
-	scale_lerp = -1 # no scaling on ready pls
-	
 	_set_activity_state(ActivityState.IDLING, 0.0)
+	
+	# log every scaled child's base position (for position scaling)
+	for child in get_children():
+		if child.get("scale"):
+			child.set_meta("base_position", child.position)
+	
+	# set initial scale
+	curr_scale = _START_SCALE
+	scale_lerp = -1 # no growing on ready
+	set_growth_scale(curr_scale)
 	
 	# duplicate our material so we can modify it
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
@@ -47,19 +56,21 @@ func _ready() -> void:
 		
 		for childs_child in child.get_children():
 			childs_child.set_surface_override_material(0, material)
-	
-	# log every scaled child's base position (for position scaling)
-	for child in get_children():
-		if child.get("scale"):
-			child.set_meta("base_position", child.position)
 
 func get_hold_distance():
 	return _HOLD_DISTANCE * curr_scale
 
 func grow():
 	prev_scale = curr_scale
-	curr_scale = prev_scale * 1.2
+	curr_scale = prev_scale + 0.2
 	scale_lerp = 0.0
+
+func set_growth_scale(fac):
+	
+	for child in get_children():
+		if child.get("scale"):
+			child.scale = Vector3(fac, fac, fac)
+			child.position = child.get_meta("base_position") * Vector3(fac, fac, fac)
 
 func set_active(value : bool):
 	
@@ -101,20 +112,15 @@ func _process(delta: float) -> void:
 		var fac = lerp(prev_scale, curr_scale, clampf(scale_lerp, 0, 1))
 		scale_lerp += delta * _GROW_SPEED
 		
-		for child in get_children():
-			if child.get("scale"):
-				child.scale = Vector3(fac, fac, fac)
-				child.position = child.get_meta("base_position") * Vector3(fac, fac, fac)
+		set_growth_scale(fac)
 		
 	elif scale_lerp >= 1.0:
 		
 		scale_lerp = -1
 		
-		for child in get_children():
-			if child.get("scale"):
-				child.scale = Vector3(curr_scale, curr_scale, curr_scale)
-				child.position = child.get_meta("base_position") * Vector3(curr_scale, curr_scale, curr_scale)
-				_set_activity_state(ActivityState.WOBBLE, 0)
+		set_growth_scale(curr_scale)
+		
+		_set_activity_state(ActivityState.WOBBLE, 0)
 	
 	# activity
 	if active:
@@ -152,8 +158,8 @@ func _process(delta: float) -> void:
 					
 					var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
 					
-					apply_torque_impulse(righting_rot * hop_speed_angular)
-					apply_central_impulse(Vector3(0, hop_speed_linear, 0))
+					apply_torque_impulse(righting_rot * _HOP_SPEED_ANGULAR * curr_scale)
+					apply_central_impulse(Vector3(0, _HOP_SPEED_LINEAR, 0))
 			
 			else:
 					

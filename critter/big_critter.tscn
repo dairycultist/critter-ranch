@@ -19,8 +19,8 @@ radius = 0.8
 physics_material_override = ExtResource("1_xquf5")
 can_sleep = false
 script = ExtResource("1_xx047")
-hop_speed_linear = 6.0
-hop_speed_angular = 0.5
+_HOP_SPEED_LINEAR = 6.0
+_HOP_SPEED_ANGULAR = 0.5
 _HOLD_DISTANCE = 2.2
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
