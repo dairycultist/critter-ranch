@@ -39,6 +39,9 @@ func set_active(value : bool):
 	$CollisionHead.disabled = not value
 	material.set_shader_parameter("transparent", not value)
 	activity_state = ActivityState.IDLING
+	
+	if $AnimationPlayer:
+		$AnimationPlayer.play("idle", 0)
 
 func _process(delta: float) -> void:
 	
@@ -53,6 +56,12 @@ func _process(delta: float) -> void:
 		$MeowSound.play()
 		
 		activity_state = ActivityState.get(ActivityState.keys().pick_random())
+		
+		if $AnimationPlayer:
+			if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
+				$AnimationPlayer.play("idle", 0.5)
+			else:
+				$AnimationPlayer.play("walk", 0.5)
 	
 	# activity (probably grounded)
 	if active and linear_velocity.y < 0 and linear_velocity.y > -0.01:

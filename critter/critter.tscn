@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=12 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_kscb4"]
@@ -21,10 +21,24 @@ length = 0.001
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh/Cylinder")
+tracks/0/path = NodePath("Mesh/Head")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0, 2.2, 0)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh/Torso")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 1.2366838, -0.85457015)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Mesh/LegFL")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array()
 
 [sub_resource type="Animation" id="Animation_ia0t7"]
 resource_name = "idle"
@@ -32,15 +46,69 @@ loop_mode = 1
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Mesh/Cylinder")
+tracks/0/path = NodePath("Mesh/Head")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 2.2, 0, 0.5, 1, 0, 2.0179727, 0.0897665, 1, 1, 0, 2.2, 0)
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 2.2, 0, 0.5, 1, 0, 2.0179727, 0.0897665)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh/Torso")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 1.2366838, -0.85457015, 0.5, 1, 0, 1.127876, -0.85457015)
+
+[sub_resource type="Animation" id="Animation_aqmuy"]
+resource_name = "walk"
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh/LegFL")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.49174172, 0.53888243, -0.19155535, 0.23333333, 1, 0.49174172, 0.6636549, -0.004945159, 0.5, 1, 0.49174172, 0.5207399, 0.28803515)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh/LegBR")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.49174172, 0.53888243, -0.19155535, 0.23333335, 1, 0.49174172, 0.6636549, -0.004945159, 0.5, 1, 0.49174172, 0.5207399, 0.28803515)
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Mesh/LegBL")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0.49174172, 0.5207399, 0.28803515, 0.50207794, 1, 0.49174172, 0.53888243, -0.19155535, 0.7354113, 1, 0.49174172, 0.6636549, -0.004945159)
+tracks/3/type = "position_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mesh/LegFR")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0.49174172, 0.5207399, 0.28803515, 0.50207794, 1, 0.49174172, 0.53888243, -0.19155535, 0.7354113, 1, 0.49174172, 0.6636549, -0.004945159)
+tracks/4/type = "rotation_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Mesh/Torso")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0.23333333, 1, 0.70710677, 0, 0, 0.70710677, 0.5, 1, 0.67497194, 0.041283064, -0.04497369, 0.7353135, 0.73333335, 1, 0.70710677, 0, 0, 0.70710677, 1, 1, 0.67497194, -0.041283064, 0.04497369, 0.7353135)
+tracks/5/type = "position_3d"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Mesh/Head")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0, 2.299034, 0, 0.23333333, 1, 0, 2.2, 0, 0.5, 1, 0, 2.299034, 0, 0.73333335, 1, 0, 2.2, 0)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kscb4"]
 _data = {
 &"RESET": SubResource("Animation_kscb4"),
-&"idle": SubResource("Animation_ia0t7")
+&"idle": SubResource("Animation_ia0t7"),
+&"walk": SubResource("Animation_aqmuy")
 }
 
 [node name="Critter" type="RigidBody3D"]
@@ -53,8 +121,23 @@ script = ExtResource("1_7qwah")
 [node name="Mesh" parent="." instance=ExtResource("2_udjov")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.31488103, 0.21504557)
 
+[node name="Torso" parent="Mesh" index="1"]
+transform = Transform3D(0.99717504, -0.07510437, 0.001237107, 0.0051823845, 0.05235844, -0.99861485, 0.0749356, 0.99579996, 0.052599754, 0, 1.2366838, -0.85457015)
+
+[node name="LegFL" parent="Mesh" index="2"]
+transform = Transform3D(0.55565035, 0, 0, 0, 0.55565035, 0, 0, 0, 0.5556503, 0.49174172, 0.5921116, -0.14174668)
+
+[node name="LegFR" parent="Mesh" index="3"]
+transform = Transform3D(0.5556503, 0, 0, 0, 0.5556503, 0, 0, 0, 0.5556503, 0.49174172, 0.52398366, 0.20228848)
+
+[node name="LegBL" parent="Mesh" index="4"]
+transform = Transform3D(0.5556503, 0, 0, 0, 0.5556503, 0, 0, 0, 0.5556503, 0.49174172, 0.52398366, 0.20228848)
+
+[node name="LegBR" parent="Mesh" index="5"]
+transform = Transform3D(0.5556503, 0, 0, 0, 0.5556503, 0, 0, 0, 0.5556503, 0.49174172, 0.5921116, -0.1417467)
+
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.226, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2026177, 0)
 shape = SubResource("BoxShape3D_fj7yv")
 
 [node name="CollisionBody" type="CollisionShape3D" parent="."]
