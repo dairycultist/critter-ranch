@@ -5,7 +5,7 @@ extends RigidBody3D
 
 @export var hold_distance := 1.0
 
-var meow_timer := 3.0
+var meow_timer : float
 var active := true
 
 var material : Material
@@ -21,6 +21,8 @@ enum ActivityState {
 var activity_state := ActivityState.IDLING
 
 func _ready() -> void:
+	
+	meow_timer = randi_range(3, 12)
 	
 	# duplicate our material so we can modify it
 	material = $Mesh.get_child(0).get_active_material(0).duplicate()
@@ -39,6 +41,7 @@ func set_active(value : bool):
 	$CollisionHead.disabled = not value
 	material.set_shader_parameter("transparent", not value)
 	activity_state = ActivityState.IDLING
+	meow_timer = randi_range(3, 12)
 	
 	if $AnimationPlayer:
 		$AnimationPlayer.play("idle", 0)
@@ -46,7 +49,8 @@ func set_active(value : bool):
 func _process(delta: float) -> void:
 	
 	# random meowing
-	meow_timer -= delta
+	if active:
+		meow_timer -= delta
 	
 	if (meow_timer < 0):
 		
