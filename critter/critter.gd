@@ -12,13 +12,13 @@ var material : Material
 
 enum ActivityState {
 	IDLING,
-	RESTING,
+	RESTING, # same as idling but with a different animation
 	WALKING_STRAIGHT,
 	WALKING_LEFT,
 	WALKING_RIGHT
 }
 
-var activity_state := ActivityState.WALKING_LEFT
+var activity_state := ActivityState.IDLING
 
 func _ready() -> void:
 	
@@ -38,6 +38,7 @@ func set_active(value : bool):
 	$CollisionBody.disabled = not value
 	$CollisionHead.disabled = not value
 	material.set_shader_parameter("transparent", not value)
+	activity_state = ActivityState.IDLING
 
 func _process(delta: float) -> void:
 	
@@ -45,10 +46,13 @@ func _process(delta: float) -> void:
 	meow_timer -= delta
 	
 	if (meow_timer < 0):
+		
 		meow_timer = randi_range(3, 12)
 		$MeowSound.volume_linear = randf() * 0.1 + 0.1
 		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 		$MeowSound.play()
+		
+		activity_state = ActivityState.get(ActivityState.keys().pick_random())
 	
 	# activity (probably grounded)
 	if active and linear_velocity.y < 0 and linear_velocity.y > -0.01:
@@ -89,7 +93,7 @@ func _process(delta: float) -> void:
 					if (linear_velocity.length() < MAX_SPEED):
 						apply_central_force(global_basis.z * 500 * delta)
 					
-					if (abs(angular_velocity.y) < MAX_TURN_SPEED):
+					if (angular_velocity.y > -MAX_TURN_SPEED):
 						apply_torque(Vector3(0, -50 * delta, 0))
 				
 				ActivityState.WALKING_RIGHT:
@@ -97,5 +101,5 @@ func _process(delta: float) -> void:
 					if (linear_velocity.length() < MAX_SPEED):
 						apply_central_force(global_basis.z * 500 * delta)
 					
-					if (abs(angular_velocity.y) < MAX_TURN_SPEED):
+					if (angular_velocity.y < MAX_TURN_SPEED):
 						apply_torque(Vector3(0, 50 * delta, 0))
