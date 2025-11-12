@@ -55,64 +55,69 @@ func _set_activity_state(value : ActivityState, transition_duration : float):
 
 func _process(delta: float) -> void:
 	
-	# random meowing
 	if active:
+		
 		meow_timer -= delta
-	
-	if (meow_timer < 0):
 		
-		$MeowSound.volume_linear = randf() * 0.1 + 0.1
-		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
-		$MeowSound.play()
-		
-		_set_activity_state(ActivityState.get(ActivityState.keys().pick_random()), 0.5)
-	
-	# activity (probably grounded)
-	if active and linear_velocity.y < 0 and linear_velocity.y > -0.01:
-		
-		# linear drag (angular drag is handled by rigidbody's angular damp)
-		apply_central_force(-linear_velocity * 500 * delta)
-		
-		var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
-		
-		if angle_to_upright > 0.3:
+		# probably grounded
+		if linear_velocity.y < 0 and linear_velocity.y > -0.01:
 			
-			# attempt to hop upright
-			if linear_velocity.length() < 0.01 and angular_velocity.length() < 0.01:
+			# random meowing/state changes
+			if (meow_timer < 0):
 			
-				var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
+				$MeowSound.volume_linear = randf() * 0.1 + 0.1
+				$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
+				$MeowSound.play()
 				
-				var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
-				
-				apply_torque_impulse(righting_rot * hop_speed_angular)
-				apply_central_impulse(Vector3(0, hop_speed_linear, 0))
+				_set_activity_state(ActivityState.get(ActivityState.keys().pick_random()), 0.5)
 		
-		else:
-				
-			# movement behaviour, walking around, idling in one place...
+			# linear drag (angular drag is handled by rigidbody's angular damp)
+			apply_central_force(-linear_velocity * 500 * delta)
 			
-			const MAX_SPEED = 1.0
-			const MAX_TURN_SPEED = 0.3
+			var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
 			
-			match activity_state:
+			if angle_to_upright > 0.3:
 				
-				ActivityState.WALKING_STRAIGHT:
-					
-					if (linear_velocity.length() < MAX_SPEED):
-						apply_central_force(global_basis.z * 500 * delta)
+				# default to idle animation if doesn't have footing
+				if activity_state != ActivityState.IDLING:
+					_set_activity_state(ActivityState.IDLING, 0.5)
 				
-				ActivityState.WALKING_LEFT:
-					
-					if (linear_velocity.length() < MAX_SPEED):
-						apply_central_force(global_basis.z * 500 * delta)
-					
-					if (angular_velocity.y > -MAX_TURN_SPEED):
-						apply_torque(Vector3(0, -50 * delta, 0))
+				# attempt to hop upright
+				if linear_velocity.length() < 0.02 and angular_velocity.length() < 0.02:
 				
-				ActivityState.WALKING_RIGHT:
+					var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
 					
-					if (linear_velocity.length() < MAX_SPEED):
-						apply_central_force(global_basis.z * 500 * delta)
+					var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
 					
-					if (angular_velocity.y < MAX_TURN_SPEED):
-						apply_torque(Vector3(0, 50 * delta, 0))
+					apply_torque_impulse(righting_rot * hop_speed_angular)
+					apply_central_impulse(Vector3(0, hop_speed_linear, 0))
+			
+			else:
+					
+				# movement behaviour, walking around, idling in one place...
+				
+				const MAX_SPEED = 1.0
+				const MAX_TURN_SPEED = 0.3
+				
+				match activity_state:
+					
+					ActivityState.WALKING_STRAIGHT:
+						
+						if (linear_velocity.length() < MAX_SPEED):
+							apply_central_force(global_basis.z * 500 * delta)
+					
+					ActivityState.WALKING_LEFT:
+						
+						if (linear_velocity.length() < MAX_SPEED):
+							apply_central_force(global_basis.z * 500 * delta)
+						
+						if (angular_velocity.y > -MAX_TURN_SPEED):
+							apply_torque(Vector3(0, -50 * delta, 0))
+					
+					ActivityState.WALKING_RIGHT:
+						
+						if (linear_velocity.length() < MAX_SPEED):
+							apply_central_force(global_basis.z * 500 * delta)
+						
+						if (angular_velocity.y < MAX_TURN_SPEED):
+							apply_torque(Vector3(0, 50 * delta, 0))
