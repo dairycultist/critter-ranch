@@ -15,16 +15,22 @@ enum ActivityState {
 	RESTING, # same as idling but with a different animation
 	WALKING_STRAIGHT,
 	WALKING_LEFT,
-	WALKING_RIGHT
+	WALKING_RIGHT,
+	WOBBLE
 }
 var activity_state : ActivityState
+
+var animation : AnimationPlayer
 
 # growth
 var curr_scale : float
 var prev_scale : float
 var scale_lerp : float
+@export var GROW_SPEED := 0.75
 
 func _ready() -> void:
+	
+	animation = $Animated/AnimationPlayer
 	
 	curr_scale = 1 # start at x1 scale
 	scale_lerp = -1 # no scaling on ready pls
@@ -32,10 +38,10 @@ func _ready() -> void:
 	_set_activity_state(ActivityState.IDLING, 0.0)
 	
 	# duplicate our material so we can modify it
-	material = $Mesh.get_child(0).get_active_material(0).duplicate()
+	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
 	
 	# assign the material to every submesh of our mesh
-	for child in $Mesh.get_children():
+	for child in $Animated/Mesh.get_children():
 		child.set_surface_override_material(0, material)
 	
 	# log every scaled child's base position (for position scaling)
@@ -65,22 +71,28 @@ func _set_activity_state(value : ActivityState, transition_duration : float):
 	
 	activity_state = value
 		
-	if $AnimationPlayer:
+	if animation:
 		if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
-			$AnimationPlayer.play("idle", transition_duration)
+			animation.play("idle", transition_duration)
+		elif activity_state == ActivityState.WOBBLE:
+			animation.play("wobble", transition_duration)
 		else:
-			$AnimationPlayer.play("walk", transition_duration)
+			animation.play("walk", transition_duration)
 
 func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		grow()
 	
+	# wobble animation state immediately switches to IDLING upon completion
+	if activity_state == ActivityState.WOBBLE and animation and not animation.is_playing():
+		_set_activity_state(ActivityState.IDLING, 0.5)
+	
 	# growing (have to both scale AND reposition children, since position scales too)
 	if scale_lerp >= 0.0 and scale_lerp < 1.0:
 		
 		var fac = lerp(prev_scale, curr_scale, clampf(scale_lerp, 0, 1))
-		scale_lerp += delta
+		scale_lerp += delta * GROW_SPEED
 		
 		for child in get_children():
 			if child.get("scale"):
@@ -95,6 +107,7 @@ func _process(delta: float) -> void:
 			if child.get("scale"):
 				child.scale = Vector3(curr_scale, curr_scale, curr_scale)
 				child.position = child.get_meta("base_position") * Vector3(curr_scale, curr_scale, curr_scale)
+				_set_activity_state(ActivityState.WOBBLE, 0)
 	
 	# activity
 	if active:
@@ -111,6 +124,7 @@ func _process(delta: float) -> void:
 				$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 				$MeowSound.play()
 				
+				# TODO shouldn't pick WOBBLE
 				_set_activity_state(ActivityState.get(ActivityState.keys().pick_random()), 0.5)
 		
 			# linear drag (angular drag is handled by rigidbody's angular damp)

@@ -23,8 +23,6 @@ hop_speed_linear = 6.0
 hop_speed_angular = 0.5
 hold_distance = 2.2
 
-[node name="Mesh" parent="." instance=ExtResource("2_xx047")]
-
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0051012, 0)
 shape = SubResource("BoxShape3D_fj7yv")
@@ -41,4 +39,8 @@ shape = SubResource("SphereShape3D_xquf5")
 transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
 stream = ExtResource("3_twcdn")
 
-[editable path="Mesh"]
+[node name="Animated" type="Node3D" parent="."]
+
+[node name="Mesh" parent="Animated" instance=ExtResource("2_xx047")]
+
+[editable path="Animated/Mesh"]
