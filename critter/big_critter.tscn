@@ -21,7 +21,7 @@ can_sleep = false
 script = ExtResource("1_xx047")
 hop_speed_linear = 6.0
 hop_speed_angular = 0.5
-hold_distance = 2.2
+_HOLD_DISTANCE = 2.2
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0051012, 0)

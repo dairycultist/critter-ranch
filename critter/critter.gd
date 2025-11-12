@@ -3,7 +3,7 @@ extends RigidBody3D
 @export var hop_speed_linear := 4.0
 @export var hop_speed_angular := 0.1
 
-@export var hold_distance := 1.0
+@export var _HOLD_DISTANCE := 1.0
 
 var meow_timer : float
 var active := true
@@ -26,7 +26,7 @@ var animation : AnimationPlayer
 var curr_scale : float
 var prev_scale : float
 var scale_lerp : float
-@export var GROW_SPEED := 0.75
+@export var _GROW_SPEED := 0.75
 
 func _ready() -> void:
 	
@@ -42,12 +42,19 @@ func _ready() -> void:
 	
 	# assign the material to every submesh of our mesh
 	for child in $Animated/Mesh.get_children():
+		
 		child.set_surface_override_material(0, material)
+		
+		for childs_child in child.get_children():
+			childs_child.set_surface_override_material(0, material)
 	
 	# log every scaled child's base position (for position scaling)
 	for child in get_children():
 		if child.get("scale"):
 			child.set_meta("base_position", child.position)
+
+func get_hold_distance():
+	return _HOLD_DISTANCE * curr_scale
 
 func grow():
 	prev_scale = curr_scale
@@ -92,7 +99,7 @@ func _process(delta: float) -> void:
 	if scale_lerp >= 0.0 and scale_lerp < 1.0:
 		
 		var fac = lerp(prev_scale, curr_scale, clampf(scale_lerp, 0, 1))
-		scale_lerp += delta * GROW_SPEED
+		scale_lerp += delta * _GROW_SPEED
 		
 		for child in get_children():
 			if child.get("scale"):

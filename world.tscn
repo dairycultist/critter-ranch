@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=11 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://cwjkx6oxx6gxv" path="res://critter/big_critter.tscn" id="3_tlwt5"]
@@ -14,6 +14,10 @@ size = Vector2(10, 10)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_036b0"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dwbse"]
+height = 1.1994629
+radius = 1.8
+
 [node name="World" type="Node3D"]
 
 [node name="BigCritter" parent="." instance=ExtResource("3_tlwt5")]
@@ -21,9 +25,6 @@ transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50
 
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 4.861724, 0)
-hop_speed_linear = null
-hop_speed_angular = null
-hold_distance = null
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -55,3 +56,9 @@ script = ExtResource("5_036b0")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Infuser"]
 stream = ExtResource("6_dwbse")
 attenuation_model = 3
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Infuser"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Infuser/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.40026855, 0)
+shape = SubResource("CylinderShape3D_dwbse")

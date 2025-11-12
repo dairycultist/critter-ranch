@@ -251,13 +251,13 @@ stream = ExtResource("3_whphh")
 transform = Transform3D(1.0000001, 0, 0, 0, 0.9963181, 0.085730836, 0, -0.08573082, 0.9963182, 0, 0.019415677, 0.001269862)
 
 [node name="LegFR" parent="Animated/Mesh" index="2"]
-transform = Transform3D(1, 0, 0, 0, 0.9749565, 0.22239564, 0, -0.22239564, 0.9749565, -0.1229355, -0.09253479, 0.16702366)
+transform = Transform3D(1, 0, 0, 0, 0.9749565, 0.22239557, 0, -0.22239557, 0.9749565, -0.1229355, -0.09253479, 0.16702366)
 
 [node name="LegBL" parent="Animated/Mesh" index="4"]
-transform = Transform3D(1, 0, 0, 0, 0.9749565, 0.22239564, 0, -0.22239564, 0.9749565, 0.1229355, -0.09253479, -0.16008759)
+transform = Transform3D(1, 0, 0, 0, 0.9749565, 0.22239557, 0, -0.22239557, 0.9749565, 0.1229355, -0.09253479, -0.16008759)
 
 [node name="LegBR" parent="Animated/Mesh" index="5"]
-transform = Transform3D(1, 0, 0, 0, 0.93709934, -0.34906283, 0, 0.34906283, 0.93709934, -0.1229355, -0.09253479, -0.16008759)
+transform = Transform3D(1, 0, 0, 0, 0.9370993, -0.349063, 0, 0.349063, 0.9370993, -0.1229355, -0.09253479, -0.16008759)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animated"]
 root_node = NodePath("../..")
