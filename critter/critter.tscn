@@ -98,21 +98,21 @@ tracks/4/enabled = true
 tracks/4/path = NodePath("Mesh/LegFR")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0.492, 0.779, -0.192)
+tracks/4/keys = PackedFloat32Array(0, 1, -0.492, 0.779, -0.192)
 tracks/5/type = "position_3d"
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/path = NodePath("Mesh/LegBL")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0, 1, 0.492, 0.779, -0.192)
+tracks/5/keys = PackedFloat32Array(0, 1, 0.491742, 0.788882, -1.5)
 tracks/6/type = "position_3d"
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/path = NodePath("Mesh/LegBR")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
-tracks/6/keys = PackedFloat32Array(0, 1, 0.492, 0.779, -0.192)
+tracks/6/keys = PackedFloat32Array(0, 1, -0.491742, 0.788882, -1.5)
 
 [sub_resource type="Animation" id="Animation_aqmuy"]
 resource_name = "walk"
@@ -206,19 +206,19 @@ script = ExtResource("1_7qwah")
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -0.31488103, 0.21504557)
 
 [node name="Torso" parent="Mesh" index="1"]
-transform = Transform3D(1.0000001, 0, 0, 0, 0.99999976, -3.3754004e-05, 0, 3.3754e-05, 0.9999999, 0, 1.2366838, -0.85457015)
+transform = Transform3D(1.0000001, 0, 0, 0, 0.99999976, 0, 0, 0, 0.9999999, 0, 1.2366838, -0.85457015)
 
 [node name="LegFR" parent="Mesh" index="2"]
-transform = Transform3D(1, 0, 0, 0, 0.8612178, 0.5082361, 0, -0.5082361, 0.8612178, 0.49174172, 0.53888243, -0.19155535)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49174172, 0.53888243, -0.19155535)
 
 [node name="LegFL" parent="Mesh" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.492, 0.7248599, 0.08211668)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.492, 0.779, -0.192)
 
 [node name="LegBL" parent="Mesh" index="4"]
-transform = Transform3D(1, 0, 0, 0, 0.8612178, 0.5082361, 0, -0.5082361, 0.8612178, 0.49174172, 0.53888243, -0.19155535)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49174172, 0.53888243, -0.19155535)
 
 [node name="LegBR" parent="Mesh" index="5"]
-transform = Transform3D(1, 0, 0, 0, 0.99886227, -0.047688283, 0, 0.047688283, 0.99886227, 0.49174172, 0.53888243, -0.19155535)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.49174172, 0.53888243, -0.19155535)
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2026177, 0)
