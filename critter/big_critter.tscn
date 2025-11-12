@@ -24,18 +24,17 @@ hop_speed_angular = 0.5
 hold_distance = 2.2
 
 [node name="Mesh" parent="." instance=ExtResource("2_xx047")]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, -1.0294858, 0.26329553)
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.93422234, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0051012, 0)
 shape = SubResource("BoxShape3D_fj7yv")
 
 [node name="CollisionBody" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.09608863, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.016870841, 0)
 shape = SubResource("CapsuleShape3D_tlwt5")
 
 [node name="CollisionHead" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.28907895, 0.84032357)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20569193, 0.84032357)
 shape = SubResource("SphereShape3D_xquf5")
 
 [node name="MeowSound" type="AudioStreamPlayer3D" parent="."]

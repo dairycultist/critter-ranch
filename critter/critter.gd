@@ -19,7 +19,15 @@ enum ActivityState {
 }
 var activity_state : ActivityState
 
+# growth
+var curr_scale : float
+var prev_scale : float
+var scale_lerp : float
+
 func _ready() -> void:
+	
+	curr_scale = 1 # start at x1 scale
+	scale_lerp = -1 # no scaling on ready pls
 	
 	_set_activity_state(ActivityState.IDLING, 0.0)
 	
@@ -29,6 +37,16 @@ func _ready() -> void:
 	# assign the material to every submesh of our mesh
 	for child in $Mesh.get_children():
 		child.set_surface_override_material(0, material)
+	
+	# log every scaled child's base position (for position scaling)
+	for child in get_children():
+		if child.get("scale"):
+			child.set_meta("base_position", child.position)
+
+func grow():
+	prev_scale = curr_scale
+	curr_scale = prev_scale * 1.2
+	scale_lerp = 0.0
 
 func set_active(value : bool):
 	
@@ -55,6 +73,30 @@ func _set_activity_state(value : ActivityState, transition_duration : float):
 
 func _process(delta: float) -> void:
 	
+	if Input.is_action_just_pressed("ui_accept"):
+		grow()
+	
+	# growing (have to both scale AND reposition children, since position scales too)
+	if scale_lerp >= 0.0 and scale_lerp < 1.0:
+		
+		var fac = lerp(prev_scale, curr_scale, clampf(scale_lerp, 0, 1))
+		scale_lerp += delta
+		
+		for child in get_children():
+			if child.get("scale"):
+				child.scale = Vector3(fac, fac, fac)
+				child.position = child.get_meta("base_position") * Vector3(fac, fac, fac)
+		
+	elif scale_lerp >= 1.0:
+		
+		scale_lerp = -1
+		
+		for child in get_children():
+			if child.get("scale"):
+				child.scale = Vector3(curr_scale, curr_scale, curr_scale)
+				child.position = child.get_meta("base_position") * Vector3(curr_scale, curr_scale, curr_scale)
+	
+	# activity
 	if active:
 		
 		meow_timer -= delta
