@@ -17,19 +17,17 @@ enum ActivityState {
 	WALKING_LEFT,
 	WALKING_RIGHT
 }
-
-var activity_state := ActivityState.IDLING
+var activity_state : ActivityState
 
 func _ready() -> void:
 	
-	meow_timer = randi_range(3, 12)
+	_set_activity_state(ActivityState.IDLING, 0.0)
 	
 	# duplicate our material so we can modify it
 	material = $Mesh.get_child(0).get_active_material(0).duplicate()
 	
 	# assign the material to every submesh of our mesh
 	for child in $Mesh.get_children():
-		
 		child.set_surface_override_material(0, material)
 
 func set_active(value : bool):
@@ -40,11 +38,20 @@ func set_active(value : bool):
 	$CollisionBody.disabled = not value
 	$CollisionHead.disabled = not value
 	material.set_shader_parameter("transparent", not value)
-	activity_state = ActivityState.IDLING
+	
+	_set_activity_state(ActivityState.IDLING, 0.0)
+
+func _set_activity_state(value : ActivityState, transition_duration : float):
+	
 	meow_timer = randi_range(3, 12)
 	
+	activity_state = value
+		
 	if $AnimationPlayer:
-		$AnimationPlayer.play("idle", 0)
+		if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
+			$AnimationPlayer.play("idle", transition_duration)
+		else:
+			$AnimationPlayer.play("walk", transition_duration)
 
 func _process(delta: float) -> void:
 	
@@ -54,18 +61,11 @@ func _process(delta: float) -> void:
 	
 	if (meow_timer < 0):
 		
-		meow_timer = randi_range(3, 12)
 		$MeowSound.volume_linear = randf() * 0.1 + 0.1
 		$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 		$MeowSound.play()
 		
-		activity_state = ActivityState.get(ActivityState.keys().pick_random())
-		
-		if $AnimationPlayer:
-			if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
-				$AnimationPlayer.play("idle", 0.5)
-			else:
-				$AnimationPlayer.play("walk", 0.5)
+		_set_activity_state(ActivityState.get(ActivityState.keys().pick_random()), 0.5)
 	
 	# activity (probably grounded)
 	if active and linear_velocity.y < 0 and linear_velocity.y > -0.01:
