@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 	
 	# wobble animation state immediately switches to IDLING upon completion
 	if activity_state == ActivityState.WOBBLE and animation and not animation.is_playing():
-		_set_activity_state(ActivityState.IDLING, 0.5)
+		_set_activity_state(ActivityState.IDLING, 0.0)
 	
 	# growing (have to both scale AND reposition children, since position scales too)
 	if scale_lerp >= 0.0 and scale_lerp < 1.0:
