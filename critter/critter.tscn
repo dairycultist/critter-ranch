@@ -13,8 +13,8 @@ radius = 0.25
 height = 0.75
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_aqk2v"]
-height = 0.5
-radius = 0.25
+height = 0.35205078
+radius = 0.17
 
 [sub_resource type="Animation" id="Animation_kscb4"]
 length = 0.001
@@ -229,7 +229,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -
 shape = SubResource("CapsuleShape3D_tlwt5")
 
 [node name="CollisionHead" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.227, 0.213)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15302539, 0.24475294)
 shape = SubResource("CylinderShape3D_aqk2v")
 
 [node name="MeowSound" type="AudioStreamPlayer3D" parent="."]
@@ -241,19 +241,19 @@ stream = ExtResource("3_whphh")
 [node name="Mesh" parent="Animated" instance=ExtResource("2_udjov")]
 
 [node name="Torso" parent="Animated/Mesh" index="0"]
-transform = Transform3D(1.0000001, 0, 0, 0, 0.99696875, 0.077799715, 0, -0.07779971, 0.99696887, 0, 0.019415677, 0.001269862)
+transform = Transform3D(1.0000001, 0, 0, 0, 0.9986505, 0.051928952, 0, -0.051928945, 0.9986506, 0, 0.019415677, 0.001269862)
 
 [node name="Head" parent="Animated/Mesh/Torso" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.99742293, -0.07174407, 0, 0.07174407, 0.99742293, 0, 0.10842401, 0.24293284)
+transform = Transform3D(1, 0, 0, 0, 0.99895763, -0.04564263, 0, 0.04564263, 0.99895763, 0, 0.10842401, 0.24293284)
 
 [node name="LegFR" parent="Animated/Mesh" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.9504761, 0.3107977, 0, -0.3107977, 0.9504761, -0.1229355, -0.09253479, 0.16702366)
+transform = Transform3D(1, 0, 0, 0, 0.8027768, 0.5962796, 0, -0.5962796, 0.8027768, -0.1229355, -0.09253479, 0.16702366)
 
 [node name="LegBL" parent="Animated/Mesh" index="3"]
-transform = Transform3D(1, 0, 0, 0, 0.9504761, 0.3107977, 0, -0.3107977, 0.9504761, 0.1229355, -0.09253479, -0.16008759)
+transform = Transform3D(1, 0, 0, 0, 0.8027768, 0.5962796, 0, -0.5962796, 0.8027768, 0.1229355, -0.09253479, -0.16008759)
 
 [node name="LegBR" parent="Animated/Mesh" index="4"]
-transform = Transform3D(1, 0, 0, 0, 0.97449845, -0.2243942, 0, 0.2243942, 0.97449845, -0.1229355, -0.09253479, -0.16008759)
+transform = Transform3D(1, 0, 0, 0, 0.88511384, -0.4653746, 0, 0.4653746, 0.88511384, -0.1229355, -0.09253479, -0.16008759)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animated"]
 root_node = NodePath("../..")
