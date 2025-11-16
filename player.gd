@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 			grabbed_critter.set_active(true)
 			
 			# fling!
-			grabbed_critter.linear_velocity = 40 * (Vector3(0, grab_y_fling, 0) + basis.x * grab_x_fling)
+			grabbed_critter.linear_velocity = 40 * (basis.z * grab_y_fling + basis.x * grab_x_fling)
 			
 			grabbed_critter = null
 		
@@ -79,6 +79,9 @@ func _process(delta: float) -> void:
 	velocity.z = lerp(velocity.z, 0.0, delta * drag)
 	
 	move_and_slide()
+	
+	grab_x_fling += input_dir.x * delta
+	grab_y_fling += input_dir.y * delta
 
 func _input(event):
 	
@@ -96,5 +99,5 @@ func _input(event):
 		camera_pitch = clampf(camera_pitch - event.relative.y * mouse_sensitivity, -90, 90)
 		
 		$Camera3D.rotation.x = deg_to_rad(camera_pitch)
-		grab_x_fling = deg_to_rad(event.relative.x * mouse_sensitivity)
-		grab_y_fling = deg_to_rad(-event.relative.y * mouse_sensitivity)
+		grab_x_fling += deg_to_rad(event.relative.x * mouse_sensitivity) * 0.2
+		grab_y_fling += deg_to_rad(event.relative.y * mouse_sensitivity) * 0.2
