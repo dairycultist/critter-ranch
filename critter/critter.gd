@@ -9,8 +9,16 @@ enum Variation {
 @export var _VARIATION := Variation.GLORBO
 
 var variation_data = [
-	["head mesh", "torso mesh", preload("res://critter/variations/glorbo_tex.png")],
-	["head mesh", "torso mesh", preload("res://critter/variations/angel_tex.png")]
+	[ # glorbo
+		null,
+		null,
+		preload("res://critter/variations/glorbo_tex.png")
+	],
+	[ # angel
+		preload("res://critter/variations/angel_hat.blend"),
+		null,
+		preload("res://critter/variations/angel_tex.png")
+	]
 ]
 
 @export var _HOLD_DISTANCE := 1.0
@@ -59,18 +67,28 @@ func _ready() -> void:
 	scale_lerp = -1 # no growing on ready
 	set_growth_scale(curr_scale)
 	
+	# add hat and coat meshes
+	if variation_data[_VARIATION][0]:
+		$Animated/Mesh/Torso/Head.add_child(variation_data[_VARIATION][0].instantiate())
+	
+	if variation_data[_VARIATION][1]:
+		$Animated/Mesh/Torso.add_child(variation_data[_VARIATION][1].instantiate())
+	
 	# duplicate our material so we can modify it
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
 	
 	material.set("shader_parameter/tex", variation_data[_VARIATION][2]);
 	
 	# assign the material to every submesh of our mesh
-	for child in $Animated/Mesh.get_children():
+	set_child_material_recursive($Animated/Mesh, material)
+
+func set_child_material_recursive(node, mat):
+	
+	for child in node.get_children():
 		
-		child.set_surface_override_material(0, material)
-		
-		for childs_child in child.get_children():
-			childs_child.set_surface_override_material(0, material)
+		if child.has_method("set_surface_override_material"):
+			child.set_surface_override_material(0, mat)
+			set_child_material_recursive(child, mat)
 
 func get_hold_distance():
 	return _HOLD_DISTANCE * curr_scale
