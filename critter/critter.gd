@@ -88,12 +88,14 @@ func set_child_material_recursive(node, mat):
 		
 		if child.has_method("set_surface_override_material"):
 			child.set_surface_override_material(0, mat)
-			set_child_material_recursive(child, mat)
+		
+		set_child_material_recursive(child, mat)
 
 func get_hold_distance():
 	return _HOLD_DISTANCE * curr_scale
 
 func grow():
+	_set_activity_state(ActivityState.IDLING, 0.5)
 	prev_scale = curr_scale
 	curr_scale = prev_scale + 0.2
 	scale_lerp = 0.0
@@ -144,15 +146,12 @@ func _process(delta: float) -> void:
 		
 		var fac = lerp(prev_scale, curr_scale, clampf(scale_lerp, 0, 1))
 		scale_lerp += delta * _GROW_SPEED
-		
 		set_growth_scale(fac)
 		
 	elif scale_lerp >= 1.0:
 		
 		scale_lerp = -1
-		
 		set_growth_scale(curr_scale)
-		
 		_set_activity_state(ActivityState.WOBBLE, 0)
 	
 	# activity
@@ -185,7 +184,7 @@ func _process(delta: float) -> void:
 					_set_activity_state(ActivityState.IDLING, 0.5)
 				
 				# attempt to hop upright
-				if linear_velocity.length() < 0.02 and angular_velocity.length() < 0.02:
+				if linear_velocity.length() < 0.05 and angular_velocity.length() < 0.01:
 				
 					var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
 					
