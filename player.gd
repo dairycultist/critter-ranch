@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
-var grab_x_fling := 0.0
-var grab_y_fling := 0.0
+var grab_fling : Vector2
 var grabbed_critter : Node3D
 
 var camera_pitch := 0.0
@@ -33,7 +32,7 @@ func _process(delta: float) -> void:
 			grabbed_critter.set_active(true)
 			
 			# fling!
-			grabbed_critter.linear_velocity = 40 * (basis.z * grab_y_fling + basis.x * grab_x_fling)
+			grabbed_critter.linear_velocity = 40 * (basis.x * grab_fling.x + basis.z * grab_fling.y)
 			
 			grabbed_critter = null
 		
@@ -57,10 +56,9 @@ func _process(delta: float) -> void:
 				grabbed_critter.rotation = Vector3.ZERO
 	
 	if grabbed_critter:
-		grabbed_critter.rotation.z = lerp(grabbed_critter.rotation.z, grab_x_fling * 4, delta * 10)
-		grabbed_critter.rotation.x = lerp(grabbed_critter.rotation.x, grab_y_fling * -4, delta * 10)
-	grab_x_fling = lerp(grab_x_fling, 0.0, delta * 10)
-	grab_y_fling = lerp(grab_y_fling, 0.0, delta * 10)
+		grabbed_critter.rotation.z = lerp(grabbed_critter.rotation.z, grab_fling.x * 4, delta * 10)
+		grabbed_critter.rotation.x = lerp(grabbed_critter.rotation.x, grab_fling.y * -4, delta * 10)
+	grab_fling = lerp(grab_fling, Vector2.ZERO, delta * 10)
 	
 	# movement
 	var input_dir := Input.get_vector("walk_left", "walk_right", "walk_up", "walk_down")
@@ -80,8 +78,7 @@ func _process(delta: float) -> void:
 	
 	move_and_slide()
 	
-	grab_x_fling += input_dir.x * delta
-	grab_y_fling += input_dir.y * delta
+	grab_fling += input_dir * delta
 
 func _input(event):
 	
@@ -99,5 +96,5 @@ func _input(event):
 		camera_pitch = clampf(camera_pitch - event.relative.y * mouse_sensitivity, -90, 90)
 		
 		$Camera3D.rotation.x = deg_to_rad(camera_pitch)
-		grab_x_fling += deg_to_rad(event.relative.x * mouse_sensitivity) * 0.2
-		grab_y_fling += deg_to_rad(event.relative.y * mouse_sensitivity) * 0.2
+		grab_fling.x += deg_to_rad(event.relative.x * mouse_sensitivity) * 0.2
+		grab_fling.y += deg_to_rad(event.relative.y * mouse_sensitivity) * 0.2

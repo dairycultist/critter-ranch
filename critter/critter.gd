@@ -81,6 +81,9 @@ func _ready() -> void:
 	
 	# assign the material to every submesh of our mesh
 	set_child_material_recursive($Animated/Mesh, material)
+	
+	# TODO instead of having a single physics material, instantiate a new
+	# TODO physics material on start and assign it 0.0 friction ONLY when walking
 
 func set_child_material_recursive(node, mat):
 	
