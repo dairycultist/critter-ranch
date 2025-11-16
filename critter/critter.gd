@@ -1,11 +1,15 @@
 extends RigidBody3D
 
-@export var _HOP_SPEED_LINEAR := 4.0
-@export var _HOP_SPEED_ANGULAR := 0.1
+@export_group("Visual")
+
+@export var _TEXTURE : Texture2D
 
 @export var _HOLD_DISTANCE := 1.0
-
 @export var _START_SCALE := 1.0
+
+@export_group("Hopping")
+@export var _HOP_SPEED_LINEAR := 4.0
+@export var _HOP_SPEED_ANGULAR := 0.1
 
 var meow_timer : float
 var active := true
@@ -48,6 +52,8 @@ func _ready() -> void:
 	
 	# duplicate our material so we can modify it
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
+	
+	material.set("shader_parameter/tex", _TEXTURE);
 	
 	# assign the material to every submesh of our mesh
 	for child in $Animated/Mesh.get_children():

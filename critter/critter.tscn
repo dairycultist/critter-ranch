@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=14 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_kscb4"]
 [ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://critter/critter.blend" id="2_udjov"]
+[ext_resource type="Texture2D" uid="uid://d1yjn647jp44l" path="res://critter/variations/critter2.png" id="3_aqmuy"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
@@ -102,7 +103,7 @@ tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Animated/Mesh/Torso")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.019415677, 0.001269862, 0.5, 1, 0, 0.013857424, 0.001269862)
 tracks/1/type = "rotation_3d"
@@ -267,6 +268,7 @@ can_sleep = false
 angular_damp_mode = 1
 angular_damp = 1.0
 script = ExtResource("1_7qwah")
+_TEXTURE = ExtResource("3_aqmuy")
 
 [node name="CollisionFeet" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13962397, 0)
@@ -292,7 +294,7 @@ stream = ExtResource("3_whphh")
 transform = Transform3D(1.0000001, 0, 0, 0, 0.9999997, 0, 0, 0, 0.9999998, 0, 0.019415677, 0.001269862)
 
 [node name="Head" parent="Animated/Mesh/Torso" index="0"]
-transform = Transform3D(1, 0, 0, 0, 0.99999976, 0, 0, 0, 0.99999976, 0, 0.22102126, 0.25346923)
+transform = Transform3D(1, 0, 0, 0, 0.9969261, -0.07834441, 0, 0.07834441, 0.9969261, 0, 0.22102126, 0.25346923)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animated"]
 root_node = NodePath("../..")
