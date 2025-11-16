@@ -2,7 +2,7 @@
 
 [ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_xquf5"]
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_xx047"]
-[ext_resource type="PackedScene" uid="uid://flv2badub0ej" path="res://critter/big_critter.blend" id="2_xx047"]
+[ext_resource type="PackedScene" uid="uid://flv2badub0ej" path="res://critter/big_critter_shelved/big_critter.blend" id="2_xx047"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_twcdn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]

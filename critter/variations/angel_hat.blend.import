@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://flv2badub0ej"
-path="res://.godot/imported/big_critter.blend-4d73d9a5df4e23f4bcff00c51011172f.scn"
+uid="uid://bxf3x7es4c64k"
+path="res://.godot/imported/angel_hat.blend-14a8ae1716e6924aeb1b90558f484c4b.scn"
 
 [deps]
 
-source_file="res://critter/big_critter.blend"
-dest_files=["res://.godot/imported/big_critter.blend-4d73d9a5df4e23f4bcff00c51011172f.scn"]
+source_file="res://critter/variations/angel_hat.blend"
+dest_files=["res://.godot/imported/angel_hat.blend-14a8ae1716e6924aeb1b90558f484c4b.scn"]
 
 [params]
 
@@ -37,15 +37,7 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"materials": {
-"Albedo": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://critter/critter_material.tres",
-"use_external/path": "uid://bcuvlnx3r3q0w"
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

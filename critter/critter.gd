@@ -2,7 +2,16 @@ extends RigidBody3D
 
 @export_group("Visual")
 
-@export var _TEXTURE : Texture2D
+enum Variation {
+	GLORBO,
+	ANGEL
+}
+@export var _VARIATION := Variation.GLORBO
+
+var variation_data = [
+	["head mesh", "torso mesh", preload("res://critter/variations/glorbo_tex.png")],
+	["head mesh", "torso mesh", preload("res://critter/variations/angel_tex.png")]
+]
 
 @export var _HOLD_DISTANCE := 1.0
 @export var _START_SCALE := 1.0
@@ -53,7 +62,7 @@ func _ready() -> void:
 	# duplicate our material so we can modify it
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
 	
-	material.set("shader_parameter/tex", _TEXTURE);
+	material.set("shader_parameter/tex", variation_data[_VARIATION][2]);
 	
 	# assign the material to every submesh of our mesh
 	for child in $Animated/Mesh.get_children():

@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=10 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
-[ext_resource type="PackedScene" uid="uid://cwjkx6oxx6gxv" path="res://critter/big_critter.tscn" id="3_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bw01y8pk66n5q" path="res://infuser.blend" id="4_036b0"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://dcjcael6c1ivm" path="res://infuser.gd" id="5_036b0"]
@@ -20,14 +19,12 @@ radius = 1.8
 
 [node name="World" type="Node3D"]
 
-[node name="BigCritter" parent="." instance=ExtResource("3_tlwt5")]
-transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -2, 1.4867992, 3)
-
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, -1.6971979, 1.3636036, -1.613311)
 
 [node name="Critter2" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 0.9428828, -3.2086883)
+_VARIATION = 1
 _START_SCALE = 1.5
 
 [node name="Floor" type="StaticBody3D" parent="."]
