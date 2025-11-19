@@ -43,27 +43,24 @@ void fragment() {
 		discard;
 	}
 	
+	// foam fac
 	float fac          = FAC(UV);
 	float parallax_fac = FAC(parallax_uv);
 	
-	float depth = texture(depth_texture, SCREEN_UV).x;
-	//vec3 ndc = vec3(SCREEN_UV, depth) * 2.0 - 1.0;
-	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
-	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+	// depth stuff
+	vec4 view = INV_PROJECTION_MATRIX * vec4(SCREEN_UV * 2.0 - 1.0, texture(depth_texture, SCREEN_UV).x, 1.0);
 	view.xyz /= view.w;
 	float linear_depth = -view.z;
 
-	float object_depth = FRAGCOORD.z;
-	//vec3 object_ndc = vec3(SCREEN_UV, object_depth) * 2.0 - 1.0;
-	vec3 object_ndc = vec3(SCREEN_UV * 2.0 - 1.0, object_depth);
-	vec4 object_view = INV_PROJECTION_MATRIX * vec4(object_ndc, 1.0);
+	vec4 object_view = INV_PROJECTION_MATRIX * vec4(vec3(SCREEN_UV * 2.0 - 1.0, FRAGCOORD.z), 1.0);
 	object_view.xyz /= object_view.w;
 	float linear_object_depth = -object_view.z;
 
-	if (linear_depth - linear_object_depth < 10.0 && fac < 0.5) {
+	if (linear_depth - linear_object_depth < 100.0 && fac < 0.5 && int(FRAGCOORD.x) % 2 != int(FRAGCOORD.y) % 2) {
 		discard;
 	}
 	
+	// final color
 	ALBEDO =
 		vec3(fac)
 		+ texture(color_ramp, vec2(texture(perlin_noise, parallax_uv).r, 0.)).rgb
