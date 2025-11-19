@@ -1,15 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=12 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
+[ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://water.tres" id="2_dwbse"]
 [ext_resource type="PackedScene" uid="uid://bw01y8pk66n5q" path="res://infuser.blend" id="4_036b0"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 [ext_resource type="Script" uid="uid://dcjcael6c1ivm" path="res://infuser.gd" id="5_036b0"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://growth.wav" id="6_dwbse"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3sb7"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_036b0"]
+size = Vector2(100, 100)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fj7yv"]
 size = Vector2(10, 10)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3sb7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_036b0"]
 
@@ -29,11 +33,17 @@ _START_SCALE = 1.5
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
+[node name="Water" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.023536444, 0)
+mesh = SubResource("PlaneMesh_036b0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_dwbse")
+
+[node name="Ground" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_fj7yv")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape3D_f3sb7")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("PlaneMesh_fj7yv")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.1852953, -0.9330126, 0.30846876, 0.24999999, 0.25881904, 0.93301266, -0.9503503, 0.25000006, 0.18529518, 0, 0, 0)
