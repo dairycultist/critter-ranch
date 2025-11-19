@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=15 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://water.tres" id="2_dwbse"]
+[ext_resource type="Shader" uid="uid://bhc5h42681ajk" path="res://parallax.gdshader" id="3_pkg7o"]
 [ext_resource type="PackedScene" uid="uid://bw01y8pk66n5q" path="res://infuser.blend" id="4_036b0"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://q5yxh4nib4c4" path="res://icon.svg" id="4_gbfbk"]
 [ext_resource type="Script" uid="uid://dcjcael6c1ivm" path="res://infuser.gd" id="5_036b0"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://growth.wav" id="6_dwbse"]
 
@@ -12,6 +14,13 @@ size = Vector2(100, 100)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_fj7yv"]
 size = Vector2(10, 10)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gbfbk"]
+render_priority = 0
+shader = ExtResource("3_pkg7o")
+shader_parameter/albedo_tex = ExtResource("4_gbfbk")
+shader_parameter/depth_scale = 0.23
+shader_parameter/discard_boundaries = false
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3sb7"]
 
@@ -41,6 +50,7 @@ surface_material_override/0 = ExtResource("2_dwbse")
 
 [node name="Ground" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("PlaneMesh_fj7yv")
+surface_material_override/0 = SubResource("ShaderMaterial_gbfbk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape3D_f3sb7")
