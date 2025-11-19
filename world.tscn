@@ -25,7 +25,7 @@ radius = 1.8
 [node name="World" type="Node3D"]
 
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
-transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, -1.6971979, 1.3636036, -1.613311)
+transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, -1.6971979, 0.25947714, -5.988966)
 
 [node name="Critter2" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 0.9428828, -3.2086883)
@@ -35,12 +35,13 @@ _START_SCALE = 1.5
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="Water" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.023536444, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20509863, 0)
 mesh = SubResource("PlaneMesh_036b0")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("2_dwbse")
 
 [node name="Ground" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3520818, 0)
 mesh = SubResource("QuadMesh_dwbse")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]

@@ -1,6 +1,8 @@
 shader_type spatial;
 render_mode blend_mix, cull_back, specular_disabled, unshaded;
 
+uniform sampler2D depth_texture : source_color, hint_depth_texture;
+
 uniform float foam_cutoff : hint_range(0., 1.) = 0.5;
 uniform float scale = 8.0;
 
@@ -14,16 +16,6 @@ uniform sampler2D color_ramp : source_color;
 uniform sampler2D albedo_tex : source_color, hint_default_black, filter_nearest, repeat_enable;
 // controls depth level of parallax effect
 uniform float depth_scale : hint_range(0., 0.04) = 0.04;
-
-// converts provided UV coordinates to parallax UV coordinates
-vec2 get_parallax_uvs(vec2 uv, vec3 view_dir) {
-	
-	vec2 vec_p = view_dir.xy / view_dir.z * -depth_scale;
-
-	vec2 final_tex_coords = uv * 0.0 + uv - vec_p * (1.0 - 0.0);
-
-	return final_tex_coords;
-}
 
 varying mat3 TBN;
 void vertex() {
@@ -43,7 +35,8 @@ void fragment() {
 	
 	vec3 view_dir = normalize(normalize(-VERTEX) * TBN);
 
-	vec2 parallax_uv = get_parallax_uvs(UV, view_dir);
+	// converts provided UV coordinates to parallax UV coordinates
+	vec2 parallax_uv = UV - (view_dir.xy / view_dir.z * -depth_scale);
 
 	// values outside the mesh bounds aren't sampled
 	if (parallax_uv.x > 1.0 || parallax_uv.x < 0.0 || parallax_uv.y > 1.0 || parallax_uv.y < 0.0) {
@@ -52,6 +45,24 @@ void fragment() {
 	
 	float fac          = FAC(UV);
 	float parallax_fac = FAC(parallax_uv);
+	
+	float depth = texture(depth_texture, SCREEN_UV).x;
+	//vec3 ndc = vec3(SCREEN_UV, depth) * 2.0 - 1.0;
+	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
+	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+	view.xyz /= view.w;
+	float linear_depth = -view.z;
+
+	float object_depth = FRAGCOORD.z;
+	//vec3 object_ndc = vec3(SCREEN_UV, object_depth) * 2.0 - 1.0;
+	vec3 object_ndc = vec3(SCREEN_UV * 2.0 - 1.0, object_depth);
+	vec4 object_view = INV_PROJECTION_MATRIX * vec4(object_ndc, 1.0);
+	object_view.xyz /= object_view.w;
+	float linear_object_depth = -object_view.z;
+
+	if (linear_depth - linear_object_depth < 10.0 && fac < 0.5) {
+		discard;
+	}
 	
 	ALBEDO =
 		vec3(fac)
