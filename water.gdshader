@@ -3,17 +3,17 @@ render_mode blend_mix, cull_back, specular_disabled, unshaded;
 
 uniform float foam_cutoff : hint_range(0., 1.) = 0.5;
 uniform float scale = 8.0;
-uniform vec4 water_color : source_color;
 
 uniform sampler3D vornoi_noise;
+uniform sampler2D perlin_noise;
+
+uniform sampler2D color_ramp : source_color;
 
 // https://godotshaders.com/shader/parallax-mapping/
 
 uniform sampler2D albedo_tex : source_color, hint_default_black, filter_nearest, repeat_enable;
 // controls depth level of parallax effect
-uniform float depth_scale = 0.1;
-// controls if values outside the mesh bounds are sampled
-uniform bool discard_boundaries = false;
+uniform float depth_scale : hint_range(0., 0.04) = 0.04;
 
 // converts provided UV coordinates to parallax UV coordinates
 vec2 get_parallax_uvs(vec2 uv, vec3 view_dir) {
@@ -27,8 +27,6 @@ vec2 get_parallax_uvs(vec2 uv, vec3 view_dir) {
 
 varying mat3 TBN;
 void vertex() {
-	
-	UV = UV * scale + TIME * 0.01;
 
 	mat4 model = transpose(inverse(MODELVIEW_MATRIX));
 	
@@ -39,22 +37,25 @@ void vertex() {
 	);
 }
 
+#define FAC(uv) 1.0 - step(pow(texture(vornoi_noise, vec3(uv * scale + TIME * 0.01, sin(TIME * 0.04) * 0.3)).r, 8.0), foam_cutoff)
+
 void fragment() {
 	
 	vec3 view_dir = normalize(normalize(-VERTEX) * TBN);
 
 	vec2 parallax_uv = get_parallax_uvs(UV, view_dir);
 
-	if (discard_boundaries) {
-		if (parallax_uv.x > 1.0 || parallax_uv.x < 0.0 || parallax_uv.y > 1.0 || parallax_uv.y < 0.0) {
-			discard;
-		}
+	// values outside the mesh bounds aren't sampled
+	if (parallax_uv.x > 1.0 || parallax_uv.x < 0.0 || parallax_uv.y > 1.0 || parallax_uv.y < 0.0) {
+		discard;
 	}
 	
-	float fac = 1.0 - step(pow(texture(vornoi_noise, vec3(UV, sin(TIME * 0.04) * 0.3)).r, 8.0), foam_cutoff);
-	float parallax_fac = 1.0 - step(pow(texture(vornoi_noise, vec3(parallax_uv, sin(TIME * 0.04) * 0.3)).r, 8.0), foam_cutoff);
+	float fac          = FAC(UV);
+	float parallax_fac = FAC(parallax_uv);
 	
 	ALBEDO =
 		vec3(fac)
-		+ water_color.rgb * vec3((1.0 - parallax_fac) * 0.5 + 0.5);
+		+ texture(color_ramp, vec2(texture(perlin_noise, parallax_uv).r, 0.)).rgb
+		* texture(color_ramp, vec2(texture(perlin_noise, parallax_uv + vec2(0.456, 0.80275)).r, 0.)).rgb
+		* vec3((1.0 - parallax_fac) * 0.5 + 0.5);
 }

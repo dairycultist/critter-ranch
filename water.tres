@@ -1,7 +1,44 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dek05fms2h6xd"]
+[gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://dek05fms2h6xd"]
 
 [ext_resource type="Shader" uid="uid://c0cwnwuu6m8ag" path="res://water.gdshader" id="1_o12aa"]
+
+[sub_resource type="Gradient" id="Gradient_o12aa"]
+offsets = PackedFloat32Array(0.45338982, 0.55932206)
+colors = PackedColorArray(0.12129829, 0.669089, 0.9999997, 1, 0, 0.83166975, 0.99215275, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y6fc4"]
+gradient = SubResource("Gradient_o12aa")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o12aa"]
+frequency = 0.0404
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y6fc4"]
+noise = SubResource("FastNoiseLite_o12aa")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dwbse"]
+noise_type = 2
+seed = 12
+frequency = 0.035
+fractal_type = 0
+cellular_return_type = 6
+domain_warp_enabled = true
+domain_warp_amplitude = 2.0
+domain_warp_frequency = 0.1
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_pkg7o"]
+width = 256
+height = 256
+noise = SubResource("FastNoiseLite_dwbse")
+seamless = true
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_o12aa")
+shader_parameter/foam_cutoff = 0.570000027075
+shader_parameter/scale = 6.0
+shader_parameter/vornoi_noise = SubResource("NoiseTexture3D_pkg7o")
+shader_parameter/perlin_noise = SubResource("NoiseTexture2D_y6fc4")
+shader_parameter/color_ramp = SubResource("GradientTexture1D_y6fc4")
+shader_parameter/depth_scale = 0.0030000001425
