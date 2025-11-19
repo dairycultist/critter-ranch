@@ -11,7 +11,7 @@ uniform sampler2D perlin_noise;
 
 uniform sampler2D color_ramp : source_color;
 
-// https://godotshaders.com/shader/parallax-mapping/
+// adapted from https://godotshaders.com/shader/parallax-mapping/
 
 uniform sampler2D albedo_tex : source_color, hint_default_black, filter_nearest, repeat_enable;
 // controls depth level of parallax effect

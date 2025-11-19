@@ -35,13 +35,12 @@ _START_SCALE = 1.5
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="Water" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.20509863, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5487137, 0)
 mesh = SubResource("PlaneMesh_036b0")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("2_dwbse")
 
 [node name="Ground" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3520818, 0)
 mesh = SubResource("QuadMesh_dwbse")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
