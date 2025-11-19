@@ -3,8 +3,8 @@
 [ext_resource type="Shader" uid="uid://c0cwnwuu6m8ag" path="res://water.gdshader" id="1_o12aa"]
 
 [sub_resource type="Gradient" id="Gradient_o12aa"]
-offsets = PackedFloat32Array(0.45338982, 0.55932206)
-colors = PackedColorArray(0.12129829, 0.669089, 0.9999997, 1, 0, 0.83166975, 0.99215275, 1)
+offsets = PackedFloat32Array(0.45338982, 0.5)
+colors = PackedColorArray(0.31189513, 0.8032728, 0.9999998, 1, 0.48202568, 0.88580203, 0.9999998, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_y6fc4"]
 gradient = SubResource("Gradient_o12aa")
