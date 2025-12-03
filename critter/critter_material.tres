@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bcuvlnx3r3q0w"]
 
 [ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critter/critter.gdshader" id="1_20qoy"]
-[ext_resource type="Texture2D" uid="uid://bt7ajpq2lxcuf" path="res://critter/variations/glorbo_tex.png" id="2_pegh5"]
+[ext_resource type="Texture2D" uid="uid://bt7ajpq2lxcuf" path="res://critter/breeds/glorbo_tex.png" id="2_pegh5"]
 
 [resource]
 render_priority = 0

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://craijl2hx42l0"
-path="res://.godot/imported/growth.wav-3def723f18b07987920142a2a03041e5.sample"
+path="res://.godot/imported/critter_growth.wav-5c76f4ffaf689807acffe82a769ab25d.sample"
 
 [deps]
 
-source_file="res://growth.wav"
-dest_files=["res://.godot/imported/growth.wav-3def723f18b07987920142a2a03041e5.sample"]
+source_file="res://critter/critter_growth.wav"
+dest_files=["res://.godot/imported/critter_growth.wav-5c76f4ffaf689807acffe82a769ab25d.sample"]
 
 [params]
 

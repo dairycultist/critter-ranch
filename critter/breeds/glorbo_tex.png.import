@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1yjn647jp44l"
-path.s3tc="res://.godot/imported/angel_tex.png-fcdba3954b0229f3b0fb8e3ef6759e01.s3tc.ctex"
+uid="uid://bt7ajpq2lxcuf"
+path.s3tc="res://.godot/imported/glorbo_tex.png-0e1e1fff68ee0b1c60d935099735e64e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://critter/variations/angel_tex.png"
-dest_files=["res://.godot/imported/angel_tex.png-fcdba3954b0229f3b0fb8e3ef6759e01.s3tc.ctex"]
+source_file="res://critter/breeds/glorbo_tex.png"
+dest_files=["res://.godot/imported/glorbo_tex.png-0e1e1fff68ee0b1c60d935099735e64e.s3tc.ctex"]
 
 [params]
 

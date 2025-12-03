@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=14 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_kscb4"]
 [ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://critter/critter.blend" id="2_udjov"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
+[ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
 size = Vector3(0.523, 0.226, 0.54)
@@ -283,6 +284,10 @@ shape = SubResource("SphereShape3D_kscb4")
 [node name="MeowSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
 stream = ExtResource("3_whphh")
+
+[node name="GrowthSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_aqmuy")
+attenuation_model = 3
 
 [node name="Animated" type="Node3D" parent="."]
 

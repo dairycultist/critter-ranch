@@ -2,22 +2,23 @@ extends RigidBody3D
 
 @export_group("Visual")
 
-enum Variation {
+enum Breed {
 	GLORBO,
 	ANGEL
 }
-@export var _VARIATION := Variation.GLORBO
 
-var variation_data = [
+@export var _BREED := Breed.GLORBO
+
+var breed_data = [
 	[ # glorbo
 		null,
 		null,
-		preload("res://critter/variations/glorbo_tex.png")
+		preload("res://critter/breeds/glorbo_tex.png")
 	],
 	[ # angel
-		preload("res://critter/variations/angel_hat.blend"),
+		preload("res://critter/breeds/angel_hat.blend"),
 		null,
-		preload("res://critter/variations/angel_tex.png")
+		preload("res://critter/breeds/angel_tex.png")
 	]
 ]
 
@@ -68,16 +69,16 @@ func _ready() -> void:
 	set_growth_scale(curr_scale)
 	
 	# add hat and coat meshes
-	if variation_data[_VARIATION][0]:
-		$Animated/Mesh/Torso/Head.add_child(variation_data[_VARIATION][0].instantiate())
+	if breed_data[_BREED][0]:
+		$Animated/Mesh/Torso/Head.add_child(breed_data[_BREED][0].instantiate())
 	
-	if variation_data[_VARIATION][1]:
-		$Animated/Mesh/Torso.add_child(variation_data[_VARIATION][1].instantiate())
+	if breed_data[_BREED][1]:
+		$Animated/Mesh/Torso.add_child(breed_data[_BREED][1].instantiate())
 	
 	# duplicate our material so we can modify it
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
 	
-	material.set("shader_parameter/tex", variation_data[_VARIATION][2]);
+	material.set("shader_parameter/tex", breed_data[_BREED][2]);
 	
 	# assign the material to every submesh of our mesh
 	set_child_material_recursive($Animated/Mesh, material)
@@ -139,6 +140,7 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		grow()
+		$GrowthSound.play()
 	
 	# wobble animation state immediately switches to IDLING upon completion
 	if activity_state == ActivityState.WOBBLE and animation and not animation.is_playing():

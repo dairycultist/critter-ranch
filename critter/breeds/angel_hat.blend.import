@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bxf3x7es4c64k"
-path="res://.godot/imported/angel_hat.blend-14a8ae1716e6924aeb1b90558f484c4b.scn"
+path="res://.godot/imported/angel_hat.blend-c440cbf7e4826a342cb791315738807e.scn"
 
 [deps]
 
-source_file="res://critter/variations/angel_hat.blend"
-dest_files=["res://.godot/imported/angel_hat.blend-14a8ae1716e6924aeb1b90558f484c4b.scn"]
+source_file="res://critter/breeds/angel_hat.blend"
+dest_files=["res://.godot/imported/angel_hat.blend-c440cbf7e4826a342cb791315738807e.scn"]
 
 [params]
 
