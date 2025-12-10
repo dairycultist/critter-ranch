@@ -9,6 +9,7 @@ enum Breed {
 
 @export var _BREED := Breed.GLORBO
 
+# include base temperament states
 var breed_data = [
 	[ # glorbo
 		null,
