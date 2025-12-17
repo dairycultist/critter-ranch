@@ -5,6 +5,8 @@ shader_type spatial;
 uniform sampler2D tex : filter_nearest, source_color;
 uniform bool transparent = false;
 
+uniform float squish : hint_range(-1.0, 1.0) = 0.0;
+
 render_mode diffuse_burley, specular_schlick_ggx, blend_mix;
 
 group_uniforms roughness;
@@ -17,6 +19,11 @@ float SchlickFresnel(float u) {
 	float m = 1.0 - u;
 	float m2 = m * m;
 	return m2 * m2 * m;
+}
+
+void vertex() {
+	VERTEX *= vec3(1.0 - VERTEX.y * squish, 1.0 - squish * 0.1, 1.0 - VERTEX.y * squish);
+	VERTEX.y -= squish * 0.05;
 }
 
 void fragment() {

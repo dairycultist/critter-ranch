@@ -8,5 +8,6 @@ render_priority = 0
 shader = ExtResource("1_20qoy")
 shader_parameter/tex = ExtResource("2_pegh5")
 shader_parameter/transparent = false
+shader_parameter/squish = 4.7499999933364734e-08
 shader_parameter/roughness = 0.15
 shader_parameter/edge_color = Color(1, 1, 1, 0.47058824)
