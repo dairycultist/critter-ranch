@@ -41,4 +41,4 @@ shader_parameter/scale = 6.0
 shader_parameter/vornoi_noise = SubResource("NoiseTexture3D_pkg7o")
 shader_parameter/perlin_noise = SubResource("NoiseTexture2D_y6fc4")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_y6fc4")
-shader_parameter/depth_scale = 0.0030000001425
+shader_parameter/depth_scale = 0.01200000057

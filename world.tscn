@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://water.tres" id="2_dwbse"]
-[ext_resource type="PackedScene" uid="uid://cshk7x65ysru6" path="res://props/grower.blend" id="4_036b0"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://jq7kyks7eqyn" path="res://props/beach.blend" id="5_036b0"]
 
@@ -16,6 +15,10 @@ size = Vector3(10, 10, 10)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_036b0"]
 
+[sub_resource type="Environment" id="Environment_036b0"]
+background_mode = 1
+background_color = Color(0.5931336, 0.59313357, 0.59313357, 1)
+
 [node name="World" type="Node3D"]
 
 [node name="Water" type="MeshInstance3D" parent="."]
@@ -24,10 +27,10 @@ mesh = SubResource("PlaneMesh_036b0")
 surface_material_override/0 = ExtResource("2_dwbse")
 
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
-transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, -1.6971979, 1.3016878, -2.7366173)
+transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, -1.6971979, 2.4346633, -2.7366173)
 
 [node name="Critter2" parent="." instance=ExtResource("1_fj7yv")]
-transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 0.9428828, -3.2086883)
+transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 2.0758584, -3.2086883)
 _BREED = 1
 _START_SCALE = 1.5
 
@@ -56,8 +59,8 @@ shape = SubResource("CapsuleShape3D_036b0")
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
-[node name="put plants in me" parent="." instance=ExtResource("4_036b0")]
-transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 1.9759083, 0, 2.6684723)
-
 [node name="beach" parent="." instance=ExtResource("5_036b0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8594446, 0.98078203, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_036b0")

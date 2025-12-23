@@ -56,8 +56,10 @@ void fragment() {
 	object_view.xyz /= object_view.w;
 	float linear_object_depth = -object_view.z;
 
-	if (linear_depth - linear_object_depth < 100.0 && fac < 0.5 && int(FRAGCOORD.x) % 2 != int(FRAGCOORD.y) % 2) {
-		discard;
+	float op = 1.0;
+
+	if (linear_depth - linear_object_depth < 100.0 && fac < foam_cutoff) {
+		op = clamp((linear_depth - linear_object_depth) / depth_scale / 100.0, 0., 1.);
 	}
 	
 	// final color
@@ -66,4 +68,6 @@ void fragment() {
 		+ texture(color_ramp, vec2(texture(perlin_noise, parallax_uv).r, 0.)).rgb
 		* texture(color_ramp, vec2(texture(perlin_noise, parallax_uv + vec2(0.456, 0.80275)).r, 0.)).rgb
 		* vec3((1.0 - parallax_fac) * 0.5 + 0.5);
+		
+	ALPHA = op;
 }
