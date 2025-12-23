@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cf70bostgoy0r"]
+
+[ext_resource type="Shader" uid="uid://dydr82gfg0xt7" path="res://props/unshaded.gdshader" id="1_dbefa"]
+[ext_resource type="Texture2D" uid="uid://c6itggectj47s" path="res://props/beach/road.png" id="2_ba5f6"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_dbefa")
+shader_parameter/tex = ExtResource("2_ba5f6")

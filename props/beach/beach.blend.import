@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://jq7kyks7eqyn"
-path="res://.godot/imported/beach.blend-f518922baf45b73a8cf0a188a1e104cb.scn"
+path="res://.godot/imported/beach.blend-3f7ef39c0003647918ad42d8c60e1b7c.scn"
 
 [deps]
 
-source_file="res://props/beach.blend"
-dest_files=["res://.godot/imported/beach.blend-f518922baf45b73a8cf0a188a1e104cb.scn"]
+source_file="res://props/beach/beach.blend"
+dest_files=["res://.godot/imported/beach.blend-3f7ef39c0003647918ad42d8c60e1b7c.scn"]
 
 [params]
 
@@ -41,8 +41,13 @@ _subresources={
 "materials": {
 "Road": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://props/road.tres",
+"use_external/fallback_path": "res://props/beach/road.tres",
 "use_external/path": "uid://cf70bostgoy0r"
+},
+"Sand": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://props/beach/sand.tres",
+"use_external/path": "uid://c3ndknm5e2otr"
 }
 }
 }

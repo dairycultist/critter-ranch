@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
-[ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://water.tres" id="2_dwbse"]
+[ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://props/water.tres" id="2_dwbse"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
-[ext_resource type="PackedScene" uid="uid://jq7kyks7eqyn" path="res://props/beach.blend" id="5_036b0"]
+[ext_resource type="PackedScene" uid="uid://jq7kyks7eqyn" path="res://props/beach/beach.blend" id="5_036b0"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_036b0"]
 size = Vector2(100, 100)
