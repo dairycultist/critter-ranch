@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1xcmijg02y3y"
-path.s3tc="res://.godot/imported/barrier.png-b679c659b3e0d7bce2ac1c7d543ac24c.s3tc.ctex"
+path.s3tc="res://.godot/imported/road_props.png-218f691f77429013a97a9a4c7920def7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://props/beach/barrier.png"
-dest_files=["res://.godot/imported/barrier.png-b679c659b3e0d7bce2ac1c7d543ac24c.s3tc.ctex"]
+source_file="res://props/beach/road_props.png"
+dest_files=["res://.godot/imported/road_props.png-218f691f77429013a97a9a4c7920def7.s3tc.ctex"]
 
 [params]
 

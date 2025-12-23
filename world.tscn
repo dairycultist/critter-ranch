@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=11 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://props/water.tres" id="2_dwbse"]
@@ -12,6 +12,9 @@ size = Vector2(100, 100)
 size = Vector3(10, 10, 10)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_f3sb7"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_aqk2v"]
+plane = Plane(1, 0, 0, 0)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_036b0"]
 
@@ -34,15 +37,22 @@ transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.63569
 _BREED = 1
 _START_SCALE = 1.5
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Terrain" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97182655, 0)
 
-[node name="Ground" type="MeshInstance3D" parent="Floor"]
+[node name="temp" type="MeshInstance3D" parent="Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 mesh = SubResource("BoxMesh_dwbse")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="Floor" type="CollisionShape3D" parent="Terrain"]
 shape = SubResource("WorldBoundaryShape3D_f3sb7")
+
+[node name="beach" parent="Terrain" instance=ExtResource("5_036b0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.990308, -0.0014977455, 0)
+
+[node name="BeachBarrier" type="CollisionShape3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.227993, 0, 0)
+shape = SubResource("WorldBoundaryShape3D_aqk2v")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.1852953, -0.9330126, 0.30846876, 0.24999999, 0.25881904, 0.93301266, -0.9503503, 0.25000006, 0.18529518, 0, 0, 0)
@@ -58,9 +68,6 @@ shape = SubResource("CapsuleShape3D_036b0")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-
-[node name="beach" parent="." instance=ExtResource("5_036b0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8594446, 0.98078203, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_036b0")

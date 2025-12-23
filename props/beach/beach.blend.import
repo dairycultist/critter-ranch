@@ -39,15 +39,15 @@ materials/extract_format=0
 materials/extract_path=""
 _subresources={
 "materials": {
-"Barrier": {
-"use_external/enabled": true,
-"use_external/fallback_path": "res://props/beach/barrier.tres",
-"use_external/path": "uid://desmeaxwftoev"
-},
 "Road": {
 "use_external/enabled": true,
 "use_external/fallback_path": "res://props/beach/road.tres",
 "use_external/path": "uid://cf70bostgoy0r"
+},
+"RoadProps": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://props/beach/road_props.tres",
+"use_external/path": "uid://desmeaxwftoev"
 },
 "Sand": {
 "use_external/enabled": true,
