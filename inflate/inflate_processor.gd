@@ -20,7 +20,7 @@ func _ready() -> void:
 	
 	_displace = Image.create_empty(w, h, false, Image.FORMAT_R8)
 
-	_displace.fill(Color.BLACK)
+	_displace.fill(Color.WHITE)
 
 	_displace_texture = ImageTexture.create_from_image(_displace)
 
@@ -37,14 +37,12 @@ func _process(_delta: float) -> void:
 		i = 0
 	
 	# update texture (TODO based on raycast nodes, one generated per pixel on ready)
-	_displace.fill(Color.BLACK)
+	_displace.fill(Color.WHITE)
 	
 	var u := randi_range(0, w - 1)
 	var v := randi_range(0, h - 1)
 	
-	_displace.set_pixel(u, v, Color.RED)
-	
-	$Test.position = uv_to_vec3((u + 0.5) / w, (v + 0.5) / h)
+	_displace.set_pixel(u, v, Color.DARK_SLATE_GRAY)
 	
 	# update material
 	_displace_texture.update(_displace)

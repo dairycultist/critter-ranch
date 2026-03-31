@@ -2,13 +2,19 @@ shader_type spatial;
 
 uniform sampler2D displace: repeat_enable;
 
+varying float d;
+
 void vertex() {
-	// TODO determine vertex displacement from the object’s local origin
+	
+	d = texture(displace, UV).r;
+	
+	// determine vertex displacement from the object’s local origin
+	VERTEX = VERTEX * d;
 }
 
 void fragment() {
 	
-	ALBEDO = vec3(texture(displace, UV).r);
+	ALBEDO = vec3(d);
 	
 	// TODO use displace to darken color where squished
 }
