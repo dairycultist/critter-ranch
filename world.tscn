@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=16 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://props/water.tres" id="2_dwbse"]
@@ -31,6 +31,8 @@ height = 2.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gbfbk"]
 render_priority = 0
 shader = ExtResource("5_pkg7o")
+
+[sub_resource type="SphereMesh" id="SphereMesh_dwbse"]
 
 [node name="World" type="Node3D"]
 
@@ -83,7 +85,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 environment = SubResource("Environment_036b0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7689595, 1.4184012, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7689595, 2.636983, 0)
 mesh = SubResource("SphereMesh_aqk2v")
 surface_material_override/0 = SubResource("ShaderMaterial_gbfbk")
 script = ExtResource("5_dwbse")
+
+[node name="Test" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("SphereMesh_dwbse")

@@ -1,26 +1,50 @@
 extends MeshInstance3D
 
-var w: int = 4
-var h: int = 4
-var mesh_radius: float = 1.0
+@export var w: int = 4
+@export var h: int = 4
+@export var mesh_radius: float = 1.0
+
+var _displace: Image
+var _displace_texture: ImageTexture
+
+# polar coordinate conversion
+func uv_to_vec3(u: float, v: float) -> Vector3:
+	
+	u = u * TAU
+	v = (v - 0.5) * PI
+	
+	# +z direction is u=0
+	return Vector3(sin(u) * cos(v), -sin(v), cos(u) * cos(v)) * mesh_radius
 
 func _ready() -> void:
 	
-	var img: Image = Image.create_empty(w, h, false, Image.FORMAT_R8)
+	_displace = Image.create_empty(w, h, false, Image.FORMAT_R8)
 
-	img.fill(Color.BLACK)
+	_displace.fill(Color.BLACK)
+
+	_displace_texture = ImageTexture.create_from_image(_displace)
+
+	get_surface_override_material(0).set("shader_parameter/displace", _displace_texture);
+
+var i = 0
+
+func _process(_delta: float) -> void:
 	
-	img.set_pixel(1, 1, Color.RED)
-
-	var img_texture = ImageTexture.create_from_image(img)
+	if i % 30 != 29:
+		i += 1
+		return
+	else:
+		i = 0
 	
-	#img_texture.update()
-
-	get_surface_override_material(0).set("shader_parameter/displace", img_texture);
-
-# Texture that constantly gets updated based on a limited set of raycast nodes
-# that are generated at @tool update (one for each pixel) which writes to a
-# texture generated at start (that crucially wraps)
-# We add this to merge game and we will be happy
-
-# Can also use that texture to darken color
+	# update texture (TODO based on raycast nodes, one generated per pixel on ready)
+	_displace.fill(Color.BLACK)
+	
+	var u := randi_range(0, w - 1)
+	var v := randi_range(0, h - 1)
+	
+	_displace.set_pixel(u, v, Color.RED)
+	
+	$Test.position = uv_to_vec3((u + 0.5) / w, (v + 0.5) / h)
+	
+	# update material
+	_displace_texture.update(_displace)

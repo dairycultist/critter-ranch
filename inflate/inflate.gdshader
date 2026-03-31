@@ -7,5 +7,8 @@ void vertex() {
 }
 
 void fragment() {
+	
 	ALBEDO = vec3(texture(displace, UV).r);
+	
+	// TODO use displace to darken color where squished
 }
