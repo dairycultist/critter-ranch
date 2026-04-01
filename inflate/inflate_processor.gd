@@ -36,7 +36,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	
-	if i != 0:
+	if i > 1:
 		i -= 1
 		return
 	else:
@@ -61,19 +61,37 @@ func _process(_delta: float) -> void:
 			else:
 				_displace_a.set_pixel(u, v, Color(0.5, 0.0, 0.0, 0.0))
 	
-	# blur such that higher values become more like nearby lower ones, but not vice-versa
+	# make neutral values near indented ones outdent
 	for u in range(w):
 		for v in range(h):
 			
 			var r := _displace_a.get_pixel(posmod(u, w), posmod(v, h)).r
 			
-			var r_new := (r +
-				_displace_a.get_pixel(posmod(u + 1, w), posmod(v + 1, h)).r +
-				_displace_a.get_pixel(posmod(u - 1, w), posmod(v + 1, h)).r +
-				_displace_a.get_pixel(posmod(u + 1, w), posmod(v - 1, h)).r +
-				_displace_a.get_pixel(posmod(u - 1, w), posmod(v - 1, h)).r) / 5.0
+			if r < 0.49:
+				continue
 			
-			_displace_b.set_pixel(u, v, Color(r_new if r_new < r else r, 0.0, 0.0, 0.0))
+			var r_new = 1.0 - min(
+				_displace_a.get_pixel(posmod(u + 1, w), clampi(v + 1, 0, h - 1)).r, # clamp v because we don't wrap that way
+				_displace_a.get_pixel(posmod(u - 1, w), clampi(v + 1, 0, h - 1)).r,
+				_displace_a.get_pixel(posmod(u + 1, w), clampi(v - 1, 0, h - 1)).r,
+				_displace_a.get_pixel(posmod(u - 1, w), clampi(v - 1, 0, h - 1)).r
+			)
+			
+			_displace_a.set_pixel(u, v, Color(r_new, 0.0, 0.0, 0.0))
+	
+	# blur such that only non-indented values change
+	for u in range(w):
+		for v in range(h):
+			
+			var r := _displace_a.get_pixel(posmod(u, w), posmod(v, h)).r
+			
+			var r_new := r if r < 0.49 else (r +
+				_displace_a.get_pixel(posmod(u + 1, w), clampi(v + 1, 0, h - 1)).r +
+				_displace_a.get_pixel(posmod(u - 1, w), clampi(v + 1, 0, h - 1)).r +
+				_displace_a.get_pixel(posmod(u + 1, w), clampi(v - 1, 0, h - 1)).r +
+				_displace_a.get_pixel(posmod(u - 1, w), clampi(v - 1, 0, h - 1)).r) / 5.0
+			
+			_displace_b.set_pixel(u, v, Color(r_new, 0.0, 0.0, 0.0))
 	
 	# update material
 	_displace_texture.update(_displace_b)
