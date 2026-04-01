@@ -40,7 +40,7 @@ materials/extract_path=""
 _subresources={
 "materials": {
 "Albedo": {
-"use_external/enabled": true,
+"use_external/enabled": false,
 "use_external/fallback_path": "res://critter/critter_material.tres",
 "use_external/path": "uid://bcuvlnx3r3q0w"
 }

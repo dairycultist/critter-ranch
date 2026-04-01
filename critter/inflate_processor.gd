@@ -32,7 +32,6 @@ func _ready() -> void:
 	_displace_texture = ImageTexture.create_from_image(_displace_b)
 
 	material = get_surface_override_material(0).duplicate()
-
 	set_surface_override_material(0, material)
 	material.set("shader_parameter/displace", _displace_texture);
 

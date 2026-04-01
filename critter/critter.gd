@@ -73,10 +73,10 @@ func _ready() -> void:
 	
 	# add hat and coat meshes
 	if breed_data[_BREED][0]:
-		$Animated/Mesh/Torso/Head.add_child(breed_data[_BREED][0].instantiate())
+		$Animated/Mesh/Head.add_child(breed_data[_BREED][0].instantiate())
 	
 	if breed_data[_BREED][1]:
-		$Animated/Mesh/Torso.add_child(breed_data[_BREED][1].instantiate())
+		$Animated/Mesh.add_child(breed_data[_BREED][1].instantiate())
 	
 	# duplicate our materials so we can modify them
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
