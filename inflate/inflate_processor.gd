@@ -10,6 +10,8 @@ var _displace_a: Image
 var _displace_b: Image # _displace_a but blurred
 var _displace_texture: ImageTexture
 
+var material: Material
+
 # polar coordinate conversion
 static func uv_to_vec3(u: float, v: float) -> Vector3:
 	
@@ -29,10 +31,10 @@ func _ready() -> void:
 
 	_displace_texture = ImageTexture.create_from_image(_displace_b)
 
-	var mat: Material = get_surface_override_material(0).duplicate()
+	material = get_surface_override_material(0).duplicate()
 
-	set_surface_override_material(0, mat)
-	mat.set("shader_parameter/displace", _displace_texture);
+	set_surface_override_material(0, material)
+	material.set("shader_parameter/displace", _displace_texture);
 
 func _process(_delta: float) -> void:
 	

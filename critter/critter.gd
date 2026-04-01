@@ -27,7 +27,7 @@ var breed_data = [
 
 @export_group("Hopping")
 @export var _HOP_SPEED_LINEAR := 4.0
-@export var _HOP_SPEED_ANGULAR := 0.02
+@export var _HOP_SPEED_ANGULAR := 0.025
 
 var meow_timer : float
 var active := true
@@ -78,10 +78,12 @@ func _ready() -> void:
 	if breed_data[_BREED][1]:
 		$Animated/Mesh/Torso.add_child(breed_data[_BREED][1].instantiate())
 	
-	# duplicate our material so we can modify it
+	# duplicate our materials so we can modify them
 	material = $Animated/Mesh.get_child(0).get_active_material(0).duplicate()
 	
 	material.set("shader_parameter/tex", breed_data[_BREED][2]);
+	
+	$Body.material.set("shader_parameter/tex", breed_data[_BREED][2]);
 	
 	# assign the material to every submesh of our mesh
 	set_child_material_recursive($Animated/Mesh, material)
@@ -118,7 +120,9 @@ func set_active(value : bool):
 	active = value
 	freeze = not value
 	$Collider.disabled = not value
+	
 	material.set_shader_parameter("transparent", not value)
+	$Body.material.set_shader_parameter("transparent", not value)
 	
 	_set_activity_state(ActivityState.IDLING, 0.0)
 

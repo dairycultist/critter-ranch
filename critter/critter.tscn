@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=18 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://critter/critter.blend" id="2_udjov"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
 [ext_resource type="Material" uid="uid://bcuvlnx3r3q0w" path="res://critter/critter_material.tres" id="6_msys6"]
+[ext_resource type="Texture2D" uid="uid://bt7ajpq2lxcuf" path="res://critter/breeds/glorbo_tex.png" id="7_gxoo7"]
 [ext_resource type="Shader" uid="uid://dkid3nh50qeg" path="res://inflate/inflate.gdshader" id="7_y6ayy"]
 [ext_resource type="Script" uid="uid://cxed5uwuge4u1" path="res://inflate/inflate_processor.gd" id="8_gxoo7"]
 
@@ -240,8 +241,10 @@ _data = {
 }
 
 [sub_resource type="SphereMesh" id="SphereMesh_7mgoj"]
+lightmap_size_hint = Vector2i(14, 8)
 radius = 0.4
 height = 0.8
+rings = 64
 
 [sub_resource type="Gradient" id="Gradient_kn85f"]
 offsets = PackedFloat32Array(0)
@@ -254,6 +257,10 @@ width = 1
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ccwgv"]
 render_priority = 0
 shader = ExtResource("7_y6ayy")
+shader_parameter/tex = ExtResource("7_gxoo7")
+shader_parameter/transparent = false
+shader_parameter/roughness = 0.15
+shader_parameter/edge_color = Color(1, 1, 1, 0.47058824)
 shader_parameter/displace = SubResource("GradientTexture1D_y6ayy")
 
 [node name="Critter" type="RigidBody3D"]
@@ -278,7 +285,7 @@ attenuation_model = 3
 [node name="Mesh" parent="Animated" instance=ExtResource("2_udjov")]
 
 [node name="Torso" parent="Animated/Mesh" index="0"]
-transform = Transform3D(1.0000001, 0, 0, 0, 0.9969222, 0.07839329, 0, -0.07839328, 0.9969223, 0, 0.019415677, 0.001269862)
+transform = Transform3D(1.0000001, 0, 0, 0, 0.9969222, 0.07839298, 0, -0.07839297, 0.9969224, 0, 0.019415677, 0.001269862)
 surface_material_override/0 = ExtResource("6_msys6")
 
 [node name="Head" parent="Animated/Mesh/Torso" index="0"]
@@ -291,7 +298,7 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Body" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_7mgoj")
 surface_material_override/0 = SubResource("ShaderMaterial_ccwgv")
 script = ExtResource("8_gxoo7")
