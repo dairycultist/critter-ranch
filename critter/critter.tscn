@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=19 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="PhysicsMaterial" uid="uid://c4fahhwyjbc0w" path="res://critter/critter_physics.tres" id="1_kscb4"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
 [ext_resource type="Material" uid="uid://bcuvlnx3r3q0w" path="res://critter/critter_material.tres" id="6_msys6"]
+[ext_resource type="Shader" uid="uid://dkid3nh50qeg" path="res://inflate/inflate.gdshader" id="7_y6ayy"]
+[ext_resource type="Script" uid="uid://cxed5uwuge4u1" path="res://inflate/inflate_processor.gd" id="8_gxoo7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
 size = Vector3(0.523, 0.226, 0.54)
@@ -262,7 +264,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.23333335, 0.36666667, 0.53333336, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [1.0, -1.0, 0.5000000712500001, -0.49999997625000003, 0.200000057, 4.7499999933364734e-08]
+"values": [1.0, -1.0, 0.5000000712500001, -0.49999997625, 0.200000057, 4.7499999933364734e-08]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kscb4"]
@@ -272,6 +274,14 @@ _data = {
 &"walk": SubResource("Animation_aqmuy"),
 &"wobble": SubResource("Animation_msys6")
 }
+
+[sub_resource type="SphereMesh" id="SphereMesh_7mgoj"]
+radius = 0.4
+height = 0.8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ccwgv"]
+render_priority = 0
+shader = ExtResource("7_y6ayy")
 
 [node name="Critter" type="RigidBody3D"]
 physics_material_override = ExtResource("1_kscb4")
@@ -317,5 +327,13 @@ libraries = {
 &"": SubResource("AnimationLibrary_kscb4")
 }
 autoplay = "idle"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_7mgoj")
+surface_material_override/0 = SubResource("ShaderMaterial_ccwgv")
+script = ExtResource("8_gxoo7")
+w = 16
+h = 16
+mesh_radius = 0.4
 
 [editable path="Animated/Mesh"]

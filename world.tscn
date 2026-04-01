@@ -1,11 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=11 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="Material" uid="uid://dek05fms2h6xd" path="res://props/water.tres" id="2_dwbse"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://jq7kyks7eqyn" path="res://props/beach/beach.blend" id="5_036b0"]
-[ext_resource type="Script" uid="uid://cxed5uwuge4u1" path="res://inflate/inflate_processor.gd" id="5_dwbse"]
-[ext_resource type="Shader" uid="uid://dkid3nh50qeg" path="res://inflate/inflate.gdshader" id="5_pkg7o"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_036b0"]
 size = Vector2(100, 100)
@@ -23,14 +21,6 @@ plane = Plane(1, 0, 0, 0)
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 1
 background_color = Color(0.6106071, 0.92525077, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_aqk2v"]
-radius = 1.0
-height = 2.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gbfbk"]
-render_priority = 0
-shader = ExtResource("5_pkg7o")
 
 [node name="World" type="Node3D"]
 
@@ -81,11 +71,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_036b0")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7689595, 1.3712306, 0)
-mesh = SubResource("SphereMesh_aqk2v")
-surface_material_override/0 = SubResource("ShaderMaterial_gbfbk")
-script = ExtResource("5_dwbse")
-w = 8
-h = 8

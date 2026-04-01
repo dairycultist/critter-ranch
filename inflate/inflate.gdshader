@@ -6,7 +6,7 @@ varying float d;
 
 void vertex() {
 	
-	d = max(0.1, texture(displace, UV).r); // prevent it from being 0.0 because things get laggy fast
+	d = max(0.5, texture(displace, UV).r); // prevent it from being 0.0 because things get laggy fast
 	
 	// determine vertex displacement from the object’s local origin
 	VERTEX = VERTEX * d;

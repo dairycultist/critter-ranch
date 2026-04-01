@@ -6,7 +6,8 @@ extends MeshInstance3D
 @export var frames_per_mesh_update: int = 4
 var i := 0
 
-var _displace: Image
+var _displace_a: Image
+var _displace_b: Image # _displace_a but blurred
 var _displace_texture: ImageTexture
 
 # polar coordinate conversion
@@ -20,13 +21,18 @@ func uv_to_vec3(u: float, v: float) -> Vector3:
 
 func _ready() -> void:
 	
-	_displace = Image.create_empty(w, h, false, Image.FORMAT_R8)
+	_displace_a = Image.create_empty(w, h, false, Image.FORMAT_R8)
+	_displace_a.fill(Color.WHITE)
+	
+	_displace_b = Image.create_empty(w, h, false, Image.FORMAT_R8)
+	_displace_b.fill(Color.WHITE)
 
-	_displace.fill(Color.WHITE)
+	_displace_texture = ImageTexture.create_from_image(_displace_b)
 
-	_displace_texture = ImageTexture.create_from_image(_displace)
+	var mat: Material = get_surface_override_material(0).duplicate()
 
-	get_surface_override_material(0).set("shader_parameter/displace", _displace_texture);
+	set_surface_override_material(0, mat)
+	mat.set("shader_parameter/displace", _displace_texture);
 
 func _process(_delta: float) -> void:
 	
@@ -36,23 +42,36 @@ func _process(_delta: float) -> void:
 	else:
 		i = frames_per_mesh_update
 	
-	# update texture (TODO based on raycast nodes, one generated per pixel on ready)
-	_displace.fill(Color.WHITE)
+	# update texture based on raycast (one per pixel)
+	_displace_a.fill(Color.WHITE)
 	
 	for u in range(w):
 		for v in range(h):
 	
-			var result = get_world_3d().direct_space_state.intersect_ray(
-				PhysicsRayQueryParameters3D.create(
-					global_position,
-					global_position + uv_to_vec3((u + 0.5) / w, (v + 0.5) / h)
-				)
+			var query = PhysicsRayQueryParameters3D.create(
+				global_position,
+				to_global(uv_to_vec3((u + 0.5) / w, (v + 0.5) / h)) # accounts for pos, rot, and scale!
 			)
 			
+			query.exclude = [ get_parent_node_3d().get_rid() ] # exclude parent collider
+	
+			var result = get_world_3d().direct_space_state.intersect_ray(query)
+			
 			if result:
-				_displace.set_pixel(u, v, Color(1.0 - global_position.distance_to(result.position), 0.0, 0.0, 0.0))
+				_displace_a.set_pixel(u, v, Color(global_position.distance_to(result.position) / mesh_radius, 0.0, 0.0, 0.0))
 			else:
-				_displace.set_pixel(u, v, Color(1.0, 0.0, 0.0, 0.0))
+				_displace_a.set_pixel(u, v, Color(1.0, 0.0, 0.0, 0.0))
+	
+	# blur image to make softer squish
+	for u in range(w):
+		for v in range(h):
+			_displace_b.set_pixel(u, v, Color(
+				(_displace_a.get_pixel(posmod(u, w), posmod(v, h)).r +
+				_displace_a.get_pixel(posmod(u + 1, w), posmod(v + 1, h)).r +
+				_displace_a.get_pixel(posmod(u - 1, w), posmod(v + 1, h)).r +
+				_displace_a.get_pixel(posmod(u + 1, w), posmod(v - 1, h)).r +
+				_displace_a.get_pixel(posmod(u - 1, w), posmod(v - 1, h)).r) / 5.0
+			, 0.0, 0.0, 0.0))
 	
 	# update material
-	_displace_texture.update(_displace)
+	_displace_texture.update(_displace_b)

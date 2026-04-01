@@ -104,6 +104,7 @@ func grow():
 	prev_scale = curr_scale
 	curr_scale = prev_scale + 0.2
 	scale_lerp = 0.0
+	$GrowthSound.play()
 
 func set_growth_scale(fac):
 	
@@ -138,10 +139,6 @@ func _set_activity_state(value : ActivityState, transition_duration : float):
 			animation.play("walk", transition_duration)
 
 func _process(delta: float) -> void:
-	
-	if Input.is_action_just_pressed("ui_accept"):
-		grow()
-		$GrowthSound.play()
 	
 	# wobble animation state immediately switches to IDLING upon completion
 	if activity_state == ActivityState.WOBBLE and animation and not animation.is_playing():
