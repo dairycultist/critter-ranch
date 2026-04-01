@@ -9,7 +9,6 @@ enum Breed {
 
 @export var _BREED := Breed.GLORBO
 
-# include base temperament states
 var breed_data = [
 	[ # glorbo
 		null,
@@ -28,7 +27,7 @@ var breed_data = [
 
 @export_group("Hopping")
 @export var _HOP_SPEED_LINEAR := 4.0
-@export var _HOP_SPEED_ANGULAR := 0.1
+@export var _HOP_SPEED_ANGULAR := 0.02
 
 var meow_timer : float
 var active := true
@@ -40,8 +39,7 @@ enum ActivityState {
 	RESTING, # same as idling but with a different animation
 	WALKING_STRAIGHT,
 	WALKING_LEFT,
-	WALKING_RIGHT,
-	WOBBLE
+	WALKING_RIGHT
 }
 var activity_state : ActivityState
 
@@ -55,6 +53,10 @@ var scale_lerp : float
 
 func _ready() -> void:
 	
+	# instantiate a new physics material on start and assign it 0.0 friction ONLY when walking
+	physics_material_override = PhysicsMaterial.new()
+	
+	# animation :D
 	animation = $Animated/AnimationPlayer
 	
 	_set_activity_state(ActivityState.IDLING, 0.0)
@@ -83,9 +85,6 @@ func _ready() -> void:
 	
 	# assign the material to every submesh of our mesh
 	set_child_material_recursive($Animated/Mesh, material)
-	
-	# TODO instead of having a single physics material, instantiate a new
-	# TODO physics material on start and assign it 0.0 friction ONLY when walking
 
 func set_child_material_recursive(node, mat):
 	
@@ -100,6 +99,7 @@ func get_hold_distance():
 	return _HOLD_DISTANCE * curr_scale
 
 func grow():
+	
 	_set_activity_state(ActivityState.IDLING, 0.5)
 	prev_scale = curr_scale
 	curr_scale = prev_scale + 0.2
@@ -117,9 +117,7 @@ func set_active(value : bool):
 	
 	active = value
 	freeze = not value
-	$CollisionFeet.disabled = not value
-	$CollisionBody.disabled = not value
-	$CollisionHead.disabled = not value
+	$Collider.disabled = not value
 	material.set_shader_parameter("transparent", not value)
 	
 	_set_activity_state(ActivityState.IDLING, 0.0)
@@ -130,32 +128,28 @@ func _set_activity_state(value : ActivityState, transition_duration : float):
 	
 	activity_state = value
 		
-	if animation:
-		if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
-			animation.play("idle", transition_duration)
-		elif activity_state == ActivityState.WOBBLE:
-			animation.play("wobble", transition_duration)
-		else:
-			animation.play("walk", transition_duration)
+	if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
+		animation.play("idle", transition_duration)
+		physics_material_override.friction = 1.0
+	else:
+		animation.play("walk", transition_duration)
+		physics_material_override.friction = 0.0
 
 func _process(delta: float) -> void:
 	
-	# wobble animation state immediately switches to IDLING upon completion
-	if activity_state == ActivityState.WOBBLE and animation and not animation.is_playing():
-		_set_activity_state(ActivityState.IDLING, 0.0)
-	
-	# growing (have to both scale AND reposition children, since position scales too)
 	if scale_lerp >= 0.0 and scale_lerp < 1.0:
 		
+		# in process of growing (have to both scale AND reposition children,
+		# since position doesn't scale by default)
 		var fac = lerp(prev_scale, curr_scale, clampf(scale_lerp, 0, 1))
 		scale_lerp += delta * _GROW_SPEED
 		set_growth_scale(fac)
 		
 	elif scale_lerp >= 1.0:
 		
+		# finish growing
 		scale_lerp = -1
 		set_growth_scale(curr_scale)
-		_set_activity_state(ActivityState.WOBBLE, 0)
 	
 	# activity
 	if active:
@@ -172,7 +166,6 @@ func _process(delta: float) -> void:
 				$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 				$MeowSound.play()
 				
-				# TODO shouldn't pick WOBBLE
 				_set_activity_state(ActivityState.get(ActivityState.keys().pick_random()), 0.5)
 		
 			# linear drag (angular drag is handled by rigidbody's angular damp)

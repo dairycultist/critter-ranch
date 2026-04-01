@@ -1,12 +1,12 @@
 shader_type spatial;
 
-uniform sampler2D displace: repeat_enable;
+uniform sampler2D displace: repeat_enable, source_color; // linear color
 
 varying float d;
 
 void vertex() {
 	
-	d = max(0.5, texture(displace, UV).r); // prevent it from being 0.0 because things get laggy fast
+	d = max(0.1, texture(displace, UV).r * 2.0); // prevent it from being 0.0 because things get laggy fast
 	
 	// determine vertex displacement from the object’s local origin
 	VERTEX = VERTEX * d;

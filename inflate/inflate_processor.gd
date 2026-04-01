@@ -11,13 +11,13 @@ var _displace_b: Image # _displace_a but blurred
 var _displace_texture: ImageTexture
 
 # polar coordinate conversion
-func uv_to_vec3(u: float, v: float) -> Vector3:
+static func uv_to_vec3(u: float, v: float) -> Vector3:
 	
 	u = u * TAU
 	v = (v - 0.5) * PI
 	
 	# +z direction is u=0
-	return Vector3(sin(u) * cos(v), -sin(v), cos(u) * cos(v)) * mesh_radius
+	return Vector3(sin(u) * cos(v), -sin(v), cos(u) * cos(v))
 
 func _ready() -> void:
 	
@@ -50,28 +50,30 @@ func _process(_delta: float) -> void:
 	
 			var query = PhysicsRayQueryParameters3D.create(
 				global_position,
-				to_global(uv_to_vec3((u + 0.5) / w, (v + 0.5) / h)) # accounts for pos, rot, and scale!
+				# accounts for pos, rot, and scale!
+				to_global(uv_to_vec3((u + 0.5) / w, (v + 0.5) / h) * mesh_radius)
 			)
-			
-			query.exclude = [ get_parent_node_3d().get_rid() ] # exclude parent collider
 	
 			var result = get_world_3d().direct_space_state.intersect_ray(query)
 			
 			if result:
-				_displace_a.set_pixel(u, v, Color(global_position.distance_to(result.position) / mesh_radius, 0.0, 0.0, 0.0))
+				_displace_a.set_pixel(u, v, Color(0.5 * global_position.distance_to(result.position) / (scale.x * mesh_radius), 0.0, 0.0, 0.0))
 			else:
-				_displace_a.set_pixel(u, v, Color(1.0, 0.0, 0.0, 0.0))
+				_displace_a.set_pixel(u, v, Color(0.5, 0.0, 0.0, 0.0))
 	
-	# blur image to make softer squish
+	# blur such that higher values become more like nearby lower ones, but not vice-versa
 	for u in range(w):
 		for v in range(h):
-			_displace_b.set_pixel(u, v, Color(
-				(_displace_a.get_pixel(posmod(u, w), posmod(v, h)).r +
+			
+			var r := _displace_a.get_pixel(posmod(u, w), posmod(v, h)).r
+			
+			var r_new := (r +
 				_displace_a.get_pixel(posmod(u + 1, w), posmod(v + 1, h)).r +
 				_displace_a.get_pixel(posmod(u - 1, w), posmod(v + 1, h)).r +
 				_displace_a.get_pixel(posmod(u + 1, w), posmod(v - 1, h)).r +
 				_displace_a.get_pixel(posmod(u - 1, w), posmod(v - 1, h)).r) / 5.0
-			, 0.0, 0.0, 0.0))
+			
+			_displace_b.set_pixel(u, v, Color(r_new if r_new < r else r, 0.0, 0.0, 0.0))
 	
 	# update material
 	_displace_texture.update(_displace_b)
