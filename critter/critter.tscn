@@ -17,8 +17,7 @@ render_priority = 0
 shader = ExtResource("5_y6ayy")
 shader_parameter/tex = ExtResource("7_gxoo7")
 shader_parameter/transparent = false
-shader_parameter/roughness = 0.15
-shader_parameter/edge_color = Color(1, 1, 1, 0.47058824)
+shader_parameter/shadow = 0.690000032775
 
 [sub_resource type="Animation" id="Animation_kscb4"]
 length = 0.001
@@ -261,7 +260,7 @@ attenuation_model = 3
 surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
 
 [node name="Head" parent="Animated/Mesh" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.00048167005, 0, -0.00048167005, 0.9999999, 0, 0.19043694, 0.2547391)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.00048167136, 0, -0.00048167136, 0.9999999, 0, 0.19043694, 0.2547391)
 surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
 
 [node name="LegBL" parent="Animated/Mesh" index="2"]

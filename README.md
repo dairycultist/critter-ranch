@@ -7,3 +7,5 @@ you can cook the same dish with different ingredients, but this changes the flav
 fresh, sweet, savoury, spicy, bitter
 
 my urge to pivot to a farming/cooking game for animal crossing creatures is powerful; maybe a good direction since it does give a bit more of a setting and gameplay direction to the game
+
+https://fixvx.com/Pannypuppy/status/2041988003837436223?s=20

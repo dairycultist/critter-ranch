@@ -117,6 +117,9 @@ func set_growth_scale(fac):
 
 func set_active(value : bool):
 	
+	# TODO instead of disabling rigidbody and locking the critter in front of the
+	# camera, keep the rigidbody and just spring the critter to the camera
+	
 	active = value
 	freeze = not value
 	$Collider.disabled = not value
