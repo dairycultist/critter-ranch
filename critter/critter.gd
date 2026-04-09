@@ -25,16 +25,13 @@ var breed_data = [
 @export var _HOLD_DISTANCE := 1.0
 @export var _START_SCALE := 1.0
 
-@export_group("Hopping")
-@export var _HOP_SPEED_LINEAR := 4.0
-@export var _HOP_SPEED_ANGULAR := 0.025
-
 var meow_timer : float
 var active := true
 
 var material : Material
 
 enum ActivityState {
+	ROLLING,
 	IDLING,
 	RESTING, # same as idling but with a different animation
 	WALKING_STRAIGHT,
@@ -53,13 +50,9 @@ var scale_lerp : float
 
 func _ready() -> void:
 	
-	# instantiate a new physics material on start and assign it 0.0 friction ONLY when walking
-	physics_material_override = PhysicsMaterial.new()
-	
-	# animation :D
 	animation = $Animated/AnimationPlayer
 	
-	_set_activity_state(ActivityState.IDLING, 0.0)
+	_set_activity_state(ActivityState.ROLLING, 0.0)
 	
 	# log every scaled child's base position (for position scaling)
 	for child in get_children():
@@ -127,20 +120,30 @@ func set_active(value : bool):
 	material.set_shader_parameter("transparent", not value)
 	$Body.material.set_shader_parameter("transparent", not value)
 	
-	_set_activity_state(ActivityState.IDLING, 0.0)
+	if value:
+		_set_activity_state(ActivityState.ROLLING, 0.0)
+	else:
+		_set_activity_state(ActivityState.IDLING, 0.0)
 
 func _set_activity_state(value : ActivityState, transition_duration : float):
 	
 	meow_timer = randi_range(3, 12)
 	
 	activity_state = value
-		
+	
+	# physics
+	if activity_state == ActivityState.ROLLING:
+		freeze = false
+	else:
+		freeze = true
+		rotation.x = 0
+		rotation.z = 0
+	
+	# animation
 	if activity_state == ActivityState.IDLING or activity_state == ActivityState.RESTING:
 		animation.play("idle", transition_duration)
-		physics_material_override.friction = 1.0
 	else:
 		animation.play("walk", transition_duration)
-		physics_material_override.friction = 0.0
 
 func _process(delta: float) -> void:
 	
@@ -164,7 +167,7 @@ func _process(delta: float) -> void:
 		meow_timer -= delta
 		
 		# probably grounded
-		if linear_velocity.y < 0 and linear_velocity.y > -0.01:
+		if abs(linear_velocity.y) < 0.1:
 			
 			# random meowing/state changes
 			if (meow_timer < 0):
@@ -173,55 +176,39 @@ func _process(delta: float) -> void:
 				$MeowSound.pitch_scale   = randf() * 0.2 + 0.8
 				$MeowSound.play()
 				
-				_set_activity_state(ActivityState.get(ActivityState.keys().pick_random()), 0.5)
-		
-			# linear drag (angular drag is handled by rigidbody's angular damp)
-			apply_central_force(-linear_velocity * 500 * delta)
+				_set_activity_state([
+					ActivityState.IDLING,
+					ActivityState.RESTING,
+					ActivityState.WALKING_STRAIGHT,
+					ActivityState.WALKING_LEFT,
+					ActivityState.WALKING_RIGHT
+				].pick_random(), 0.5)
 			
-			var angle_to_upright = acos(global_basis.y.dot(Vector3(0, 1, 0)))
+			# movement behaviour, walking around, idling in one place...
+			const MAX_SPEED = 1.0
+			const MAX_TURN_SPEED = 0.3
 			
-			if angle_to_upright > 0.3:
+			match activity_state:
 				
-				# default to idle animation if doesn't have footing
-				if activity_state != ActivityState.IDLING:
-					_set_activity_state(ActivityState.IDLING, 0.5)
+				ActivityState.ROLLING:
+					pass
 				
-				# attempt to hop upright
-				if linear_velocity.length() < 0.05 and angular_velocity.length() < 0.01:
+				ActivityState.IDLING:
+					pass
+					
+				ActivityState.RESTING:
+					pass
 				
-					var axis_to_upright = global_basis.y.cross(Vector3(0, 1, 0)).normalized()
+				ActivityState.WALKING_STRAIGHT:
 					
-					var righting_rot = Quaternion(axis_to_upright, angle_to_upright).get_euler(EULER_ORDER_XYZ)
-					
-					apply_torque_impulse(righting_rot * _HOP_SPEED_ANGULAR * curr_scale)
-					apply_central_impulse(Vector3(0, _HOP_SPEED_LINEAR, 0))
-			
-			else:
-					
-				# movement behaviour, walking around, idling in one place...
+					global_position += global_basis.z * MAX_SPEED * delta
 				
-				const MAX_SPEED = 1.0
-				const MAX_TURN_SPEED = 0.3
+				ActivityState.WALKING_LEFT:
+					
+					global_position += global_basis.z * MAX_SPEED * delta
+					global_rotation -= global_basis.y * MAX_TURN_SPEED * delta
 				
-				match activity_state:
+				ActivityState.WALKING_RIGHT:
 					
-					ActivityState.WALKING_STRAIGHT:
-						
-						if (linear_velocity.length() < MAX_SPEED):
-							apply_central_force(global_basis.z * 500 * delta)
-					
-					ActivityState.WALKING_LEFT:
-						
-						if (linear_velocity.length() < MAX_SPEED):
-							apply_central_force(global_basis.z * 500 * delta)
-						
-						if (angular_velocity.y > -MAX_TURN_SPEED):
-							apply_torque(Vector3(0, -50 * delta, 0))
-					
-					ActivityState.WALKING_RIGHT:
-						
-						if (linear_velocity.length() < MAX_SPEED):
-							apply_central_force(global_basis.z * 500 * delta)
-						
-						if (angular_velocity.y < MAX_TURN_SPEED):
-							apply_torque(Vector3(0, 50 * delta, 0))
+					global_position += global_basis.z * MAX_SPEED * delta
+					global_rotation += global_basis.y * MAX_TURN_SPEED * delta

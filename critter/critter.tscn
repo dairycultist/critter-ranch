@@ -9,8 +9,8 @@
 [ext_resource type="Shader" uid="uid://dkid3nh50qeg" path="res://critter/inflate.gdshader" id="7_y6ayy"]
 [ext_resource type="Script" uid="uid://cxed5uwuge4u1" path="res://critter/inflate_processor.gd" id="8_gxoo7"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fj7yv"]
-size = Vector3(0.4, 0.4, 0.4)
+[sub_resource type="SphereShape3D" id="SphereShape3D_y6ayy"]
+radius = 0.25
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gxoo7"]
 render_priority = 0
@@ -231,18 +231,16 @@ render_priority = 0
 shader = ExtResource("7_y6ayy")
 shader_parameter/tex = ExtResource("7_gxoo7")
 shader_parameter/transparent = false
-shader_parameter/roughness = 0.15
-shader_parameter/edge_color = Color(1, 1, 1, 0.47058824)
+shader_parameter/shadow = 0.690000032775
 shader_parameter/displace = SubResource("GradientTexture1D_y6ayy")
 
 [node name="Critter" type="RigidBody3D"]
 can_sleep = false
 angular_damp_mode = 1
-angular_damp = 1.0
 script = ExtResource("1_7qwah")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_fj7yv")
+shape = SubResource("SphereShape3D_y6ayy")
 
 [node name="MeowSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(0.611527, 0, 0.79122347, 0, 1, 0, -0.7912235, 0, 0.61152697, 0, 0, 0)
@@ -260,7 +258,7 @@ attenuation_model = 3
 surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
 
 [node name="Head" parent="Animated/Mesh" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.00048167136, 0, -0.00048167136, 0.9999999, 0, 0.19043694, 0.2547391)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0004816752, 0, -0.0004816752, 0.9999999, 0, 0.19043694, 0.2547391)
 surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
 
 [node name="LegBL" parent="Animated/Mesh" index="2"]
