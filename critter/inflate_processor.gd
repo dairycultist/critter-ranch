@@ -6,8 +6,8 @@ extends MeshInstance3D
 @export var frames_per_mesh_update: int = 4
 var i := 0
 
-var _displace_a: Image
-var _displace_b: Image # _displace_a but blurred
+var _displace_a: Image # we need two buffers for pre- post-operations
+var _displace_b: Image
 var _displace_texture: ImageTexture
 
 var material: Material
@@ -69,6 +69,7 @@ func _process(_delta: float) -> void:
 			var r := _displace_a.get_pixel(posmod(u, w), posmod(v, h)).r
 			
 			if r < 0.49:
+				_displace_b.set_pixel(u, v, Color(r, 0.0, 0.0, 0.0))
 				continue
 			
 			var r_new = 1.0 - min(
@@ -78,21 +79,24 @@ func _process(_delta: float) -> void:
 				_displace_a.get_pixel(posmod(u - 1, w), clampi(v - 1, 0, h - 1)).r
 			)
 			
-			_displace_a.set_pixel(u, v, Color(r_new, 0.0, 0.0, 0.0))
+			if r_new > 0.52: # assuming the value did increase, increase it more!!
+				r_new += 0.2
+			
+			_displace_b.set_pixel(u, v, Color(r_new, 0.0, 0.0, 0.0))
 	
 	# blur such that only non-indented values change
 	for u in range(w):
 		for v in range(h):
 			
-			var r := _displace_a.get_pixel(posmod(u, w), posmod(v, h)).r
+			var r := _displace_b.get_pixel(posmod(u, w), posmod(v, h)).r
 			
 			var r_new := r if r < 0.49 else (r +
-				_displace_a.get_pixel(posmod(u + 1, w), clampi(v + 1, 0, h - 1)).r +
-				_displace_a.get_pixel(posmod(u - 1, w), clampi(v + 1, 0, h - 1)).r +
-				_displace_a.get_pixel(posmod(u + 1, w), clampi(v - 1, 0, h - 1)).r +
-				_displace_a.get_pixel(posmod(u - 1, w), clampi(v - 1, 0, h - 1)).r) / 5.0
+				_displace_b.get_pixel(posmod(u + 1, w), clampi(v + 1, 0, h - 1)).r +
+				_displace_b.get_pixel(posmod(u - 1, w), clampi(v + 1, 0, h - 1)).r +
+				_displace_b.get_pixel(posmod(u + 1, w), clampi(v - 1, 0, h - 1)).r +
+				_displace_b.get_pixel(posmod(u - 1, w), clampi(v - 1, 0, h - 1)).r) / 5.0
 			
-			_displace_b.set_pixel(u, v, Color(r_new, 0.0, 0.0, 0.0))
+			_displace_a.set_pixel(u, v, Color(r_new, 0.0, 0.0, 0.0))
 	
 	# update material
-	_displace_texture.update(_displace_b)
+	_displace_texture.update(_displace_a)
