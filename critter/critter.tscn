@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
 [ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critter/critter.gdshader" id="5_y6ayy"]
+[ext_resource type="ArrayMesh" uid="uid://cij1xok8i8gq1" path="res://ball.obj" id="7_7mgoj"]
 [ext_resource type="Texture2D" uid="uid://bt7ajpq2lxcuf" path="res://critter/breeds/glorbo_tex.png" id="7_gxoo7"]
 [ext_resource type="Shader" uid="uid://dkid3nh50qeg" path="res://critter/inflate.gdshader" id="7_y6ayy"]
 [ext_resource type="Script" uid="uid://cxed5uwuge4u1" path="res://critter/inflate_processor.gd" id="8_gxoo7"]
@@ -212,12 +213,6 @@ _data = {
 &"walk": SubResource("Animation_aqmuy")
 }
 
-[sub_resource type="SphereMesh" id="SphereMesh_7mgoj"]
-lightmap_size_hint = Vector2i(14, 8)
-radius = 0.35
-height = 0.7
-rings = 64
-
 [sub_resource type="Gradient" id="Gradient_kn85f"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0.7350987, 0.73509866, 0.73509866, 1)
@@ -258,7 +253,7 @@ attenuation_model = 3
 surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
 
 [node name="Head" parent="Animated/Mesh" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.0004816752, 0, -0.0004816752, 0.9999999, 0, 0.19043694, 0.2547391)
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.00048167713, 0, -0.00048167713, 0.9999999, 0, 0.19043694, 0.2547391)
 surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
 
 [node name="LegBL" parent="Animated/Mesh" index="2"]
@@ -278,11 +273,11 @@ libraries = {
 autoplay = "idle"
 
 [node name="Body" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_7mgoj")
+mesh = ExtResource("7_7mgoj")
 surface_material_override/0 = SubResource("ShaderMaterial_ccwgv")
 script = ExtResource("8_gxoo7")
-w = 16
-h = 16
+w = 12
+h = 12
 mesh_radius = 0.35
 frames_per_mesh_update = 1
 

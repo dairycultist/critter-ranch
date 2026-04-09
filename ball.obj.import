@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cij1xok8i8gq1"
+path="res://.godot/imported/ball.obj-75ffe4ff73c956c9ec5d6dbeddfbe969.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ball.obj-75ffe4ff73c956c9ec5d6dbeddfbe969.mesh"]
+
+source_file="res://ball.obj"
+dest_files=["res://.godot/imported/ball.obj-75ffe4ff73c956c9ec5d6dbeddfbe969.mesh", "res://.godot/imported/ball.obj-75ffe4ff73c956c9ec5d6dbeddfbe969.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(0.35, 0.35, 0.35)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

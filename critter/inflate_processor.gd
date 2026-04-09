@@ -15,11 +15,10 @@ var material: Material
 # polar coordinate conversion
 static func uv_to_vec3(u: float, v: float) -> Vector3:
 	
-	u = u * TAU
+	u = (u - 0.5) * TAU
 	v = (v - 0.5) * PI
 	
-	# +z direction is u=0
-	return Vector3(sin(u) * cos(v), -sin(v), cos(u) * cos(v))
+	return Vector3(cos(u) * cos(v), sin(v), sin(u) * cos(v))
 
 func _ready() -> void:
 	
