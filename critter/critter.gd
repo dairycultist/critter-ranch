@@ -70,8 +70,12 @@ func _process(delta: float) -> void:
 		
 		meow_timer -= delta
 		
-		# probably grounded
-		if abs(linear_velocity.y) < 0.1:
+		if activity_state == ActivityState.ROLLING:
+			
+			if linear_velocity.length() < 1.0 and position_onto_ground(delta):
+				_set_activity_state(ActivityState.IDLING)
+			
+		else:
 			
 			# random meowing/state changes
 			if (meow_timer < 0):
@@ -125,8 +129,9 @@ func _process(delta: float) -> void:
 					
 					position_onto_ground(delta)
 
-func position_onto_ground(delta: float) -> void:
+func position_onto_ground(delta: float) -> bool: # returns true if succeeded
 	
+	$GroundingRay.global_rotation = Vector3.ZERO
 	$GroundingRay.force_raycast_update()
 	
 	if $GroundingRay.is_colliding():
@@ -139,8 +144,10 @@ func position_onto_ground(delta: float) -> void:
 		$Mesh.look_at($Mesh.global_position + $GroundingRay.get_collision_normal().cross(global_basis.x), $GroundingRay.get_collision_normal())
 		$Mesh.global_basis = Basis(lerp(prev, $Mesh.global_basis.get_rotation_quaternion(), 10.0 * delta))
 		
-		return
+		return true
 	
 	# failed to ground, must be in the air!
 	_set_activity_state(ActivityState.ROLLING)
 	apply_central_impulse(global_basis.z)
+	
+	return false
