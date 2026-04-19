@@ -1,9 +1,13 @@
 # critter-ranch
 
-fresh, sweet, savoury, spicy, bitter plants
+plant, collect variants
+- fresh (cucumbers)
+- sour (lemons, blackberries, oranges)
+- sweet (apples, pumpkins, raspberries)
+- savoury (tomatoes, potatoes)
+- spicy (peppers, horseradishes)
+- bitter (eggplants, melons, grapefruits)
 
 https://x.com/Pannypuppy/status/2041988003837436223?s=20
-
-plant, collect variants
 
 if you stress over chud plant pet game I will end you
