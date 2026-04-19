@@ -34,7 +34,9 @@ stream = ExtResource("3_whphh")
 stream = ExtResource("4_aqmuy")
 attenuation_model = 3
 
+[node name="GroundingRay" type="RayCast3D" parent="."]
+
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.23723263, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24380901, 0)
 mesh = ExtResource("4_msys6")
 surface_material_override/0 = SubResource("ShaderMaterial_kn85f")
