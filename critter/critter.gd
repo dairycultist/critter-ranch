@@ -1,9 +1,11 @@
 extends RigidBody3D
 
-var meow_timer : float
+var meow_timer: float
 var active := true
 
-var material : Material
+var material: Material
+
+var mesh_base_y: float
 
 enum ActivityState {
 	ROLLING,
@@ -17,6 +19,8 @@ var activity_state : ActivityState
 func _ready() -> void:
 	
 	_set_activity_state(ActivityState.ROLLING)
+	
+	mesh_base_y = $Mesh.position.y
 	
 	# duplicate our materials so we can modify them
 	material = $Mesh.get_active_material(0).duplicate()
@@ -54,6 +58,12 @@ func _set_activity_state(value : ActivityState):
 
 func _process(delta: float) -> void:
 	
+	var f := sin(Time.get_ticks_msec() * 0.01) * 0.05
+	$Mesh.scale.x = 1.0 - f
+	$Mesh.scale.y = 1.0 + f
+	$Mesh.scale.z = 1.0 - f
+	$Mesh.rotation.z = sin(Time.get_ticks_msec() * 0.005 - PI / 4) * 0.05
+	
 	# activity
 	if active:
 		
@@ -90,14 +100,20 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_STRAIGHT:
 					
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
+					
 					global_position += global_basis.z * MAX_SPEED * delta
 				
 				ActivityState.WALKING_LEFT:
+					
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation -= global_basis.y * MAX_TURN_SPEED * delta
 				
 				ActivityState.WALKING_RIGHT:
+					
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation += global_basis.y * MAX_TURN_SPEED * delta

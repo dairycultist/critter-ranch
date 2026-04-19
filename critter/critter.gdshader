@@ -1,16 +1,12 @@
-shader_type spatial;
-
 // adapted from https://godotshaders.com/shader/pbr-glass/
 
-uniform sampler2D tex : filter_nearest, source_color;
-uniform bool transparent = false;
-
+shader_type spatial;
 render_mode diffuse_burley, specular_schlick_ggx, blend_mix;
 
-group_uniforms roughness;
-uniform float roughness : hint_range(0.0, 1.0) = 0.15;
+uniform sampler2D _Albedo : filter_nearest, source_color;
+uniform bool transparent = false;
 
-group_uniforms misc;
+uniform float roughness : hint_range(0.0, 1.0) = 0.15;
 uniform vec4 edge_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 float SchlickFresnel(float u) {
@@ -29,7 +25,7 @@ void fragment() {
 	float VdotN = dot(VIEW, NORMAL);
 	float fresnel = clamp(SchlickFresnel(VdotN), 0.0, 1.0);
 	
-	ALBEDO = texture(tex, UV).rgb + edge_color.rgb * edge_color.a * fresnel;
+	ALBEDO = texture(_Albedo, UV).rgb + edge_color.rgb * edge_color.a * fresnel;
 	
 	ROUGHNESS = roughness;
 }
