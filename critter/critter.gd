@@ -129,17 +129,18 @@ func position_onto_ground(delta: float) -> void:
 	
 	$GroundingRay.force_raycast_update()
 	
-	for i in range(10):
-	
-		if $GroundingRay.is_colliding():
-			
-			# place onto surface
-			global_position = $GroundingRay.get_collision_point() - Vector3($Mesh.position.x, mesh_base_y, $Mesh.position.z)
-			
-			# align w/ surface normal
-			var prev = $Mesh.global_basis.get_rotation_quaternion()
-			$Mesh.look_at($Mesh.global_position + $GroundingRay.get_collision_normal().cross(global_basis.x), $GroundingRay.get_collision_normal())
-			$Mesh.global_basis = Basis(lerp(prev, $Mesh.global_basis.get_rotation_quaternion(), 10.0 * delta))
-			break
+	if $GroundingRay.is_colliding():
 		
-		global_position.y += 0.01
+		# place onto surface
+		global_position = $GroundingRay.get_collision_point() + Vector3(0.0, 0.25, 0.0) # radius
+		
+		# align w/ surface normal
+		var prev = $Mesh.global_basis.get_rotation_quaternion()
+		$Mesh.look_at($Mesh.global_position + $GroundingRay.get_collision_normal().cross(global_basis.x), $GroundingRay.get_collision_normal())
+		$Mesh.global_basis = Basis(lerp(prev, $Mesh.global_basis.get_rotation_quaternion(), 10.0 * delta))
+		
+		return
+	
+	# failed to ground, must be in the air!
+	_set_activity_state(ActivityState.ROLLING)
+	apply_central_force(global_basis.z * 10.0)
