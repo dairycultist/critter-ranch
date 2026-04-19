@@ -53,6 +53,7 @@ mesh = ExtResource("4_msys6")
 surface_material_override/0 = SubResource("ShaderMaterial_kn85f")
 
 [node name="TextAnchor" type="Node3D" parent="."]
+visible = false
 
 [node name="Text" type="Label3D" parent="TextAnchor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2570059, 0)

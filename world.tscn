@@ -1,11 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=15 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
 [ext_resource type="ArrayMesh" uid="uid://c6rj2d3hi0mah" path="res://critter/pumpkin.obj" id="2_036b0"]
 [ext_resource type="Texture2D" uid="uid://q5yxh4nib4c4" path="res://icon.svg" id="2_tlwt5"]
+[ext_resource type="ArrayMesh" uid="uid://dfofnf4ff6w2c" path="res://critter/sprout.obj" id="3_036b0"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_aqk2v"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_dwbse"]
+radius = 0.18
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqk2v"]
 albedo_texture = ExtResource("2_tlwt5")
@@ -34,7 +38,7 @@ background_color = Color(0.6106071, 0.92525077, 1, 1)
 [node name="World" type="Node3D"]
 
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
-transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, -1.6971979, 2.4346633, -2.7366173)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -1.6971979, 2.4346633, -2.7366173)
 hold_distance = 1.5
 
 [node name="Collider" parent="Critter" index="0"]
@@ -47,10 +51,23 @@ target_position = Vector3(0, -0.6, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8626451e-09, -0.4523413, 1.8626451e-09)
 
 [node name="Critter2" parent="." instance=ExtResource("1_fj7yv")]
-transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 2.0758584, -3.2086883)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 2.0758584, -3.2086883)
 
 [node name="Mesh" parent="Critter2" index="4"]
 mesh = ExtResource("2_036b0")
+
+[node name="Critter3" parent="." instance=ExtResource("1_fj7yv")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1.0730404, 2.0758584, -3.2086883)
+
+[node name="Collider" parent="Critter3" index="0"]
+shape = SubResource("SphereShape3D_dwbse")
+
+[node name="GroundingRay" parent="Critter3" index="3"]
+target_position = Vector3(0, -0.25, 0)
+
+[node name="Mesh" parent="Critter3" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18418649, 0)
+mesh = ExtResource("3_036b0")
 
 [node name="Terrain" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97182655, 0)
@@ -92,3 +109,4 @@ environment = SubResource("Environment_036b0")
 
 [editable path="Critter"]
 [editable path="Critter2"]
+[editable path="Critter3"]

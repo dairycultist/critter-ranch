@@ -1,5 +1,7 @@
 # critter-ranch
 
+ur a wizard who grows magic animate crops
+
 plant, collect variants
 - fresh (cucumbers)
 - sour (lemons, blackberries, oranges)
