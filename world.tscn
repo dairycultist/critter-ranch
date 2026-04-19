@@ -39,7 +39,6 @@ background_color = Color(0.6106071, 0.92525077, 1, 1)
 
 [node name="Critter" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -1.6971979, 2.4346633, -2.7366173)
-hold_distance = 1.5
 
 [node name="Collider" parent="Critter" index="0"]
 shape = SubResource("SphereShape3D_aqk2v")

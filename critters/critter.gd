@@ -7,8 +7,6 @@ var material: Material
 
 var mesh_base_y: float
 
-@export var hold_distance := 1.0
-
 enum ActivityState {
 	ROLLING,
 	IDLING,
@@ -27,6 +25,9 @@ func _ready() -> void:
 	# duplicate our materials so we can modify them
 	material = $Mesh.get_active_material(0).duplicate()
 	$Mesh.set_surface_override_material(0, material)
+
+func get_hold_distance() -> float:
+	return $Collider.shape.radius * 2 + 0.75
 
 func set_active(value : bool):
 	
@@ -94,11 +95,13 @@ func _process(delta: float) -> void:
 				
 				ActivityState.IDLING:
 					
+					$Mesh.position.y = mesh_base_y
+					
 					position_onto_ground(delta)
 				
 				ActivityState.WALKING_STRAIGHT:
 					
-					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * $Collider.shape.radius / 3.5)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					
@@ -106,7 +109,7 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_LEFT:
 					
-					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * $Collider.shape.radius / 3.5)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation -= global_basis.y * MAX_TURN_SPEED * delta
@@ -115,7 +118,7 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_RIGHT:
 					
-					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * $Collider.shape.radius / 3.5)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation += global_basis.y * MAX_TURN_SPEED * delta
@@ -127,6 +130,8 @@ func _process(delta: float) -> void:
 	$Mesh.scale.x = 1.0 - f
 	$Mesh.scale.y = 1.0 + f
 	$Mesh.scale.z = 1.0 - f
+	
+	# not the best since it screws with aligning with surface normal, but w/e
 	$Mesh.rotation.z = sin(Time.get_ticks_msec() * 0.005 - PI / 4) * 0.05
 
 func position_onto_ground(delta: float) -> bool: # returns true if succeeded
