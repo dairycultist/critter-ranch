@@ -101,36 +101,39 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_STRAIGHT:
 					
-					position_onto_ground()
-					
 					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
-				
-				ActivityState.WALKING_LEFT:
 					
 					position_onto_ground()
+				
+				ActivityState.WALKING_LEFT:
 					
 					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation -= global_basis.y * MAX_TURN_SPEED * delta
-				
-				ActivityState.WALKING_RIGHT:
 					
 					position_onto_ground()
+				
+				ActivityState.WALKING_RIGHT:
 					
 					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * 0.05)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation += global_basis.y * MAX_TURN_SPEED * delta
+					
+					position_onto_ground()
 
 func position_onto_ground() -> void:
+	
+	$GroundingRay.force_raycast_update()
 	
 	for i in range(10):
 	
 		if $GroundingRay.is_colliding():
 			global_position = $GroundingRay.get_collision_point() - Vector3($Mesh.position.x, mesh_base_y, $Mesh.position.z)
+			$Mesh.look_at($Mesh.global_position + $GroundingRay.get_collision_normal().cross(global_basis.x), $GroundingRay.get_collision_normal())
 			break
 		
 		global_position.y += 0.01
