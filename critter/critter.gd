@@ -7,6 +7,8 @@ var material: Material
 
 var mesh_base_y: float
 
+@export var hold_distance := 1.0
+
 enum ActivityState {
 	ROLLING,
 	IDLING,
@@ -26,21 +28,15 @@ func _ready() -> void:
 	material = $Mesh.get_active_material(0).duplicate()
 	$Mesh.set_surface_override_material(0, material)
 
-func get_hold_distance():
-	return 1.0
-
 func set_active(value : bool):
+	
+	_set_activity_state(ActivityState.ROLLING)
 	
 	active = value
 	freeze = not value
 	$Collider.disabled = not value
 	
 	material.set_shader_parameter("transparent", not value)
-	
-	if value:
-		_set_activity_state(ActivityState.ROLLING)
-	else:
-		_set_activity_state(ActivityState.IDLING)
 
 func _set_activity_state(value : ActivityState):
 	
@@ -57,13 +53,6 @@ func _set_activity_state(value : ActivityState):
 		rotation.z = 0
 
 func _process(delta: float) -> void:
-	
-	# idle animation
-	var f := sin(Time.get_ticks_msec() * 0.01) * 0.05
-	$Mesh.scale.x = 1.0 - f
-	$Mesh.scale.y = 1.0 + f
-	$Mesh.scale.z = 1.0 - f
-	$Mesh.rotation.z = sin(Time.get_ticks_msec() * 0.005 - PI / 4) * 0.05
 	
 	# activity
 	if active:
@@ -129,6 +118,13 @@ func _process(delta: float) -> void:
 					global_rotation += global_basis.y * MAX_TURN_SPEED * delta
 					
 					position_onto_ground(delta)
+	
+	# idle animation
+	var f := sin(Time.get_ticks_msec() * 0.01) * 0.05
+	$Mesh.scale.x = 1.0 - f
+	$Mesh.scale.y = 1.0 + f
+	$Mesh.scale.z = 1.0 - f
+	$Mesh.rotation.z = sin(Time.get_ticks_msec() * 0.005 - PI / 4) * 0.05
 
 func position_onto_ground(delta: float) -> bool: # returns true if succeeded
 	
@@ -138,7 +134,7 @@ func position_onto_ground(delta: float) -> bool: # returns true if succeeded
 	if $GroundingRay.is_colliding():
 		
 		# place onto surface
-		global_position = $GroundingRay.get_collision_point() + Vector3(0.0, 0.25, 0.0) # radius
+		global_position = $GroundingRay.get_collision_point() + Vector3(0.0, $Collider.shape.radius, 0.0)
 		
 		# align w/ surface normal
 		var prev = $Mesh.global_basis.get_rotation_quaternion()
