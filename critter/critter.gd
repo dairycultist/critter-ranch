@@ -105,7 +105,7 @@ func _process(delta: float) -> void:
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					
-					position_onto_ground()
+					position_onto_ground(delta)
 				
 				ActivityState.WALKING_LEFT:
 					
@@ -114,7 +114,7 @@ func _process(delta: float) -> void:
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation -= global_basis.y * MAX_TURN_SPEED * delta
 					
-					position_onto_ground()
+					position_onto_ground(delta)
 				
 				ActivityState.WALKING_RIGHT:
 					
@@ -123,17 +123,23 @@ func _process(delta: float) -> void:
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation += global_basis.y * MAX_TURN_SPEED * delta
 					
-					position_onto_ground()
+					position_onto_ground(delta)
 
-func position_onto_ground() -> void:
+func position_onto_ground(delta: float) -> void:
 	
 	$GroundingRay.force_raycast_update()
 	
 	for i in range(10):
 	
 		if $GroundingRay.is_colliding():
+			
+			# place onto surface
 			global_position = $GroundingRay.get_collision_point() - Vector3($Mesh.position.x, mesh_base_y, $Mesh.position.z)
+			
+			# align w/ surface normal
+			var prev = $Mesh.global_basis.get_rotation_quaternion()
 			$Mesh.look_at($Mesh.global_position + $GroundingRay.get_collision_normal().cross(global_basis.x), $GroundingRay.get_collision_normal())
+			$Mesh.global_basis = Basis(lerp(prev, $Mesh.global_basis.get_rotation_quaternion(), 10.0 * delta))
 			break
 		
 		global_position.y += 0.01
