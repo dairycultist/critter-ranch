@@ -1,233 +1,23 @@
-[gd_scene load_steps=19 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=8 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
-[ext_resource type="PackedScene" uid="uid://dbovgacj5pmv8" path="res://critter/critter.blend" id="2_udjov"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
 [ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critter/critter.gdshader" id="5_y6ayy"]
-[ext_resource type="ArrayMesh" uid="uid://cij1xok8i8gq1" path="res://ball.obj" id="7_7mgoj"]
-[ext_resource type="Texture2D" uid="uid://bt7ajpq2lxcuf" path="res://critter/breeds/glorbo_tex.png" id="7_gxoo7"]
-[ext_resource type="Shader" uid="uid://dkid3nh50qeg" path="res://critter/inflate.gdshader" id="7_y6ayy"]
-[ext_resource type="Script" uid="uid://cxed5uwuge4u1" path="res://critter/inflate_processor.gd" id="8_gxoo7"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y6ayy"]
 radius = 0.25
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gxoo7"]
+[sub_resource type="SphereMesh" id="SphereMesh_ia0t7"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kscb4"]
 render_priority = 0
 shader = ExtResource("5_y6ayy")
-shader_parameter/tex = ExtResource("7_gxoo7")
 shader_parameter/transparent = false
-shader_parameter/shadow = 0.690000032775
-
-[sub_resource type="Animation" id="Animation_kscb4"]
-length = 0.001
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Animated/Mesh/LegFL")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Animated/Mesh/LegFR")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -0.111665964, -0.1032845, 0.27163827)
-tracks/2/type = "position_3d"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Animated/Mesh/LegBL")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0.111665934, -0.1032845, -0.2553531)
-tracks/3/type = "position_3d"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Animated/Mesh/LegBR")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, -0.111665964, -0.1032845, -0.2553531)
-tracks/4/type = "position_3d"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Animated/Mesh/LegFL")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0.111665934, -0.1032845, 0.27163827)
-tracks/5/type = "rotation_3d"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Animated/Mesh/LegFR")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/6/type = "rotation_3d"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Animated/Mesh/LegBL")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/7/type = "rotation_3d"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Animated/Mesh/LegBR")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_ia0t7"]
-resource_name = "idle"
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Animated/Mesh/LegFL")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.111665934, -0.1032845, 0.27163827)
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Animated/Mesh/LegFR")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -0.111665964, -0.1032845, 0.27163827)
-tracks/2/type = "position_3d"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Animated/Mesh/LegBL")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0.111665934, -0.1032845, -0.2553531)
-tracks/3/type = "position_3d"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Animated/Mesh/LegBR")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, -0.111665964, -0.1032845, -0.2553531)
-tracks/4/type = "rotation_3d"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Animated/Mesh/LegFL")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/5/type = "rotation_3d"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Animated/Mesh/LegBR")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/6/type = "rotation_3d"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Animated/Mesh/LegBL")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-tracks/7/type = "rotation_3d"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Animated/Mesh/LegFR")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_aqmuy"]
-resource_name = "walk"
-loop_mode = 1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Animated/Mesh/LegFL")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.123, -0.105, 0.167, 0.23333333, 1, 0.123, -0.074, 0.214, 0.5, 1, 0.123, -0.11, 0.287)
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Animated/Mesh/LegBR")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -0.123, -0.105, -0.208, 0.23333333, 1, -0.123, -0.074, -0.161, 0.5, 1, -0.123, -0.11, -0.088)
-tracks/2/type = "position_3d"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Animated/Mesh/LegBL")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, 0.123, -0.11, -0.088, 0.50207794, 1, 0.123, -0.105, -0.208, 0.73333335, 1, 0.123, -0.074, -0.161)
-tracks/3/type = "position_3d"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Animated/Mesh/LegFR")
-tracks/3/interp = 2
-tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, -0.123, -0.11, 0.287, 0.50207794, 1, -0.123, -0.105, 0.167, 0.7354113, 1, -0.123, -0.074, 0.214)
-tracks/4/type = "rotation_3d"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Animated/Mesh/LegFL")
-tracks/4/interp = 2
-tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0.17734241, 0, 0, 0.9841492, 0.23333333, 1, -0.26386464, 0, 0, 0.96455973)
-tracks/5/type = "rotation_3d"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Animated/Mesh/LegFR")
-tracks/5/interp = 2
-tracks/5/loop_wrap = true
-tracks/5/keys = PackedFloat32Array(0.5, 1, 0.17734241, 0, 0, 0.9841492, 0.73333335, 1, -0.26386464, 0, 0, 0.96455973)
-tracks/6/type = "rotation_3d"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Animated/Mesh/LegBL")
-tracks/6/interp = 2
-tracks/6/loop_wrap = true
-tracks/6/keys = PackedFloat32Array(0.5, 1, 0.17734241, 0, 0, 0.9841492, 0.73333335, 1, -0.26386464, 0, 0, 0.96455973)
-tracks/7/type = "rotation_3d"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("Animated/Mesh/LegBR")
-tracks/7/interp = 2
-tracks/7/loop_wrap = true
-tracks/7/keys = PackedFloat32Array(0, 1, 0.17734241, 0, 0, 0.9841492, 0.23333335, 1, -0.26386464, 0, 0, 0.96455973)
-tracks/8/type = "rotation_3d"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Animated/Mesh/Head")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = PackedFloat32Array(0, 1, 0.039905082, 0, 0, 0.9992035, 0.23333333, 1, -0.0033684815, 0, 0, 0.9999943, 0.5, 1, 0.039905082, 0, 0, 0.9992035, 0.73333335, 1, -0.0033684815, 0, 0, 0.9999943)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_kscb4"]
-_data = {
-&"RESET": SubResource("Animation_kscb4"),
-&"idle": SubResource("Animation_ia0t7"),
-&"walk": SubResource("Animation_aqmuy")
-}
-
-[sub_resource type="Gradient" id="Gradient_kn85f"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.7350987, 0.73509866, 0.73509866, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_y6ayy"]
-gradient = SubResource("Gradient_kn85f")
-width = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ccwgv"]
-render_priority = 0
-shader = ExtResource("7_y6ayy")
-shader_parameter/tex = ExtResource("7_gxoo7")
-shader_parameter/transparent = false
-shader_parameter/shadow = 0.690000032775
-shader_parameter/displace = SubResource("GradientTexture1D_y6ayy")
+shader_parameter/roughness = 0.15
+shader_parameter/edge_color = Color(0, 0, 0, 1)
 
 [node name="Critter" type="RigidBody3D"]
 can_sleep = false
@@ -245,40 +35,8 @@ stream = ExtResource("3_whphh")
 stream = ExtResource("4_aqmuy")
 attenuation_model = 3
 
-[node name="Animated" type="Node3D" parent="."]
-
-[node name="Mesh" parent="Animated" instance=ExtResource("2_udjov")]
-
-[node name="LegFR" parent="Animated/Mesh" index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
-
-[node name="Head" parent="Animated/Mesh" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.9999999, 0.00048167713, 0, -0.00048167713, 0.9999999, 0, 0.19043694, 0.2547391)
-surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
-
-[node name="LegBL" parent="Animated/Mesh" index="2"]
-surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
-
-[node name="LegBR" parent="Animated/Mesh" index="3"]
-surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
-
-[node name="LegFL" parent="Animated/Mesh" index="4"]
-surface_material_override/0 = SubResource("ShaderMaterial_gxoo7")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Animated"]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_kscb4")
-}
-autoplay = "idle"
-
 [node name="Body" type="MeshInstance3D" parent="."]
-mesh = ExtResource("7_7mgoj")
-surface_material_override/0 = SubResource("ShaderMaterial_ccwgv")
-script = ExtResource("8_gxoo7")
-w = 12
-h = 12
-mesh_radius = 0.35
-frames_per_mesh_update = 1
 
-[editable path="Animated/Mesh"]
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ia0t7")
+surface_material_override/0 = SubResource("ShaderMaterial_kscb4")
