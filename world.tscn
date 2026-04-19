@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bk28lx65ha5ck"]
+[gd_scene load_steps=12 format=3 uid="uid://bk28lx65ha5ck"]
 
 [ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
+[ext_resource type="ArrayMesh" uid="uid://c6rj2d3hi0mah" path="res://critter/pumpkin.obj" id="2_036b0"]
 [ext_resource type="Texture2D" uid="uid://q5yxh4nib4c4" path="res://icon.svg" id="2_tlwt5"]
 [ext_resource type="ArrayMesh" uid="uid://bwir1iu44ak3t" path="res://critter/plant.obj" id="3_aqk2v"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
@@ -33,6 +34,9 @@ transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.63569
 
 [node name="Critter2" parent="." instance=ExtResource("1_fj7yv")]
 transform = Transform3D(-0.73899084, 0.5714127, 0.3569035, -0.12352251, -0.6356903, 0.76199734, 0.662295, 0.5190235, 0.54035175, 0, 2.0758584, -3.2086883)
+
+[node name="Mesh" parent="Critter2" index="4"]
+mesh = ExtResource("2_036b0")
 
 [node name="Terrain" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.97182655, 0)
@@ -71,3 +75,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_036b0")
+
+[editable path="Critter2"]

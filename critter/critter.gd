@@ -101,7 +101,8 @@ func _process(delta: float) -> void:
 					pass
 				
 				ActivityState.IDLING:
-					pass
+					
+					position_onto_ground(delta)
 				
 				ActivityState.WALKING_STRAIGHT:
 					
