@@ -143,4 +143,4 @@ func position_onto_ground(delta: float) -> void:
 	
 	# failed to ground, must be in the air!
 	_set_activity_state(ActivityState.ROLLING)
-	apply_central_force(global_basis.z * 10.0)
+	apply_central_impulse(global_basis.z)
