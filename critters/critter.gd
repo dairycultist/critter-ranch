@@ -55,6 +55,10 @@ func _set_activity_state(value : ActivityState):
 
 func _process(delta: float) -> void:
 	
+	const MAX_SPEED = 1.0
+	const MAX_TURN_SPEED = 0.3
+	const BOUNCE_RATE := 0.008
+	
 	$TextAnchor.global_rotation = Vector3.ZERO
 	$TextAnchor/Text.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP, true)
 	
@@ -85,9 +89,6 @@ func _process(delta: float) -> void:
 				].pick_random())
 			
 			# movement behaviour, walking around, idling in one place...
-			const MAX_SPEED = 1.0
-			const MAX_TURN_SPEED = 0.3
-			
 			match activity_state:
 				
 				ActivityState.ROLLING:
@@ -101,7 +102,7 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_STRAIGHT:
 					
-					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * $Collider.shape.radius / 3.5)
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * BOUNCE_RATE + PI / 4) * $Collider.shape.radius / 3.5)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					
@@ -109,7 +110,7 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_LEFT:
 					
-					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * $Collider.shape.radius / 3.5)
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * BOUNCE_RATE + PI / 4) * $Collider.shape.radius / 3.5)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation -= global_basis.y * MAX_TURN_SPEED * delta
@@ -118,7 +119,7 @@ func _process(delta: float) -> void:
 				
 				ActivityState.WALKING_RIGHT:
 					
-					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * 0.01) * $Collider.shape.radius / 3.5)
+					$Mesh.position.y = mesh_base_y + abs(sin(Time.get_ticks_msec() * BOUNCE_RATE + PI / 4) * $Collider.shape.radius / 3.5)
 					
 					global_position += global_basis.z * MAX_SPEED * delta
 					global_rotation += global_basis.y * MAX_TURN_SPEED * delta
@@ -126,13 +127,15 @@ func _process(delta: float) -> void:
 					position_onto_ground(delta)
 	
 	# idle animation
-	var f := sin(Time.get_ticks_msec() * 0.01) * 0.05
+	var rate := 0.01 if activity_state == ActivityState.IDLING or activity_state == ActivityState.ROLLING else (BOUNCE_RATE * 2.0)
+	
+	var f := sin(Time.get_ticks_msec() * rate) * 0.05
 	$Mesh.scale.x = 1.0 - f
 	$Mesh.scale.y = 1.0 + f
 	$Mesh.scale.z = 1.0 - f
 	
 	# not the best since it screws with aligning with surface normal, but w/e
-	$Mesh.rotation.z = sin(Time.get_ticks_msec() * 0.005 - PI / 4) * 0.05
+	$Mesh.rotation.z = sin(Time.get_ticks_msec() * rate * 0.5 - PI / 4) * 0.05
 
 func position_onto_ground(delta: float) -> bool: # returns true if succeeded
 	
