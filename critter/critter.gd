@@ -54,6 +54,9 @@ func _set_activity_state(value : ActivityState):
 
 func _process(delta: float) -> void:
 	
+	$TextAnchor.global_rotation = Vector3.ZERO
+	$TextAnchor/Text.look_at(get_viewport().get_camera_3d().global_position, Vector3.UP, true)
+	
 	# activity
 	if active:
 		

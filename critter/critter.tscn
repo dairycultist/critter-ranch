@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnen3v6e8xqv2"]
+[gd_scene load_steps=12 format=3 uid="uid://bnen3v6e8xqv2"]
 
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bwir1iu44ak3t" path="res://critter/plant.obj" id="4_msys6"]
 [ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critter/critter.gdshader" id="5_y6ayy"]
 [ext_resource type="Texture2D" uid="uid://da2yw0lnhvwuo" path="res://critter/plant.png" id="6_msys6"]
+[ext_resource type="Texture2D" uid="uid://cmds2b3syrupv" path="res://critter/bubble.png" id="7_kn85f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y6ayy"]
 radius = 0.25
@@ -15,8 +16,17 @@ render_priority = 0
 shader = ExtResource("5_y6ayy")
 shader_parameter/_Albedo = ExtResource("6_msys6")
 shader_parameter/transparent = false
-shader_parameter/roughness = 0.15
 shader_parameter/edge_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6ayy"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("7_kn85f")
+
+[sub_resource type="QuadMesh" id="QuadMesh_msys6"]
+size = Vector2(0.75, 0.75)
 
 [node name="Critter" type="RigidBody3D"]
 can_sleep = false
@@ -41,3 +51,18 @@ target_position = Vector3(0, -0.4, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24380901, 0)
 mesh = ExtResource("4_msys6")
 surface_material_override/0 = SubResource("ShaderMaterial_kn85f")
+
+[node name="TextAnchor" type="Node3D" parent="."]
+
+[node name="Text" type="Label3D" parent="TextAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2570059, 0)
+pixel_size = 0.0025
+text = "meow"
+font_size = 64
+outline_size = 26
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TextAnchor/Text"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.041623473, -0.001)
+material_override = SubResource("StandardMaterial3D_y6ayy")
+mesh = SubResource("QuadMesh_msys6")
+skeleton = NodePath("../..")

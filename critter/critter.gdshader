@@ -6,7 +6,6 @@ render_mode diffuse_burley, specular_schlick_ggx, blend_mix;
 uniform sampler2D _Albedo : filter_nearest, source_color;
 uniform bool transparent = false;
 
-uniform float roughness : hint_range(0.0, 1.0) = 0.15;
 uniform vec4 edge_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 float SchlickFresnel(float u) {
@@ -27,5 +26,10 @@ void fragment() {
 	
 	ALBEDO = texture(_Albedo, UV).rgb + edge_color.rgb * edge_color.a * fresnel;
 	
-	ROUGHNESS = roughness;
+	ROUGHNESS = 0.15;
+	SPECULAR = 0.5;
+}
+
+void light() {
+    DIFFUSE_LIGHT += clamp(smoothstep(0.0, 0.3, dot(NORMAL, LIGHT)), 0.0, 1.0) * ATTENUATION * LIGHT_COLOR / PI;
 }
