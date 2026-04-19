@@ -1,6 +1,5 @@
 # Blender 4.5.5 LTS
 # www.blender.org
-mtllib pumpkin.mtl
 o Cylinder
 v 0.060341 0.236573 0.211889
 v 0.059733 0.240109 0.204745

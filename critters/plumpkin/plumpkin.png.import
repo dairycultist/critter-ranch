@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://da2yw0lnhvwuo"
-path.s3tc="res://.godot/imported/plant.png-ab4dd71f36a5adbead29bb7a7b18dcce.s3tc.ctex"
+path.s3tc="res://.godot/imported/plumpkin.png-7d826309d945c8dd1465282221b31187.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://critter/plant.png"
-dest_files=["res://.godot/imported/plant.png-ab4dd71f36a5adbead29bb7a7b18dcce.s3tc.ctex"]
+source_file="res://critters/plumpkin/plumpkin.png"
+dest_files=["res://.godot/imported/plumpkin.png-7d826309d945c8dd1465282221b31187.s3tc.ctex"]
 
 [params]
 

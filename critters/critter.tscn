@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://bnen3v6e8xqv2"]
 
-[ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
-[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
-[ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
-[ext_resource type="ArrayMesh" uid="uid://bwir1iu44ak3t" path="res://critter/plant.obj" id="4_msys6"]
-[ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critter/critter.gdshader" id="5_y6ayy"]
-[ext_resource type="Texture2D" uid="uid://da2yw0lnhvwuo" path="res://critter/plant.png" id="6_msys6"]
-[ext_resource type="Texture2D" uid="uid://cmds2b3syrupv" path="res://critter/bubble.png" id="7_kn85f"]
+[ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critters/critter.gd" id="1_7qwah"]
+[ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critters/critter_meow.wav" id="3_whphh"]
+[ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critters/critter_growth.wav" id="4_aqmuy"]
+[ext_resource type="ArrayMesh" uid="uid://bwir1iu44ak3t" path="res://critters/plumpkin/plumpkin_3.obj" id="4_msys6"]
+[ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critters/critter.gdshader" id="5_y6ayy"]
+[ext_resource type="Texture2D" uid="uid://da2yw0lnhvwuo" path="res://critters/plumpkin/plumpkin.png" id="6_msys6"]
+[ext_resource type="Texture2D" uid="uid://cmds2b3syrupv" path="res://critters/bubble.png" id="7_kn85f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y6ayy"]
 radius = 0.25

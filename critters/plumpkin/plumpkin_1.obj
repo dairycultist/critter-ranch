@@ -1,6 +1,5 @@
 # Blender 4.5.5 LTS
 # www.blender.org
-mtllib sprout.mtl
 o Cylinder
 v 0.060341 0.137193 0.069231
 v 0.059733 0.142730 0.063496

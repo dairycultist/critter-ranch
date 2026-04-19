@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dy544pymli650"
-path="res://.godot/imported/critter_meow_src.wav-72431ce5582056464e91c6b2cf9df435.sample"
+path="res://.godot/imported/critter_meow_src.wav-0cfbd5cf95e830419550bf4d3251ab74.sample"
 
 [deps]
 
-source_file="res://critter/critter_meow_src.wav"
-dest_files=["res://.godot/imported/critter_meow_src.wav-72431ce5582056464e91c6b2cf9df435.sample"]
+source_file="res://critters/critter_meow_src.wav"
+dest_files=["res://.godot/imported/critter_meow_src.wav-0cfbd5cf95e830419550bf4d3251ab74.sample"]
 
 [params]
 

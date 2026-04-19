@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmds2b3syrupv"
-path.s3tc="res://.godot/imported/bubble.png-72c02646896144240db50a6822a7c49b.s3tc.ctex"
+path.s3tc="res://.godot/imported/bubble.png-575b5492fd341a24ccfab555d9911d4d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://critter/bubble.png"
-dest_files=["res://.godot/imported/bubble.png-72c02646896144240db50a6822a7c49b.s3tc.ctex"]
+source_file="res://critters/bubble.png"
+dest_files=["res://.godot/imported/bubble.png-575b5492fd341a24ccfab555d9911d4d.s3tc.ctex"]
 
 [params]
 

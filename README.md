@@ -13,3 +13,5 @@ plant, collect variants
 https://x.com/Pannypuppy/status/2041988003837436223?s=20
 
 if you stress over chud plant pet game I will end you
+
+little dirt mound that has ruins of a circular stone brick tower on top, with an opening in the wall that reveals a cauldron in the center (for making sprouts)

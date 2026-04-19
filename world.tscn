@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://bk28lx65ha5ck"]
 
-[ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critter/critter.tscn" id="1_fj7yv"]
-[ext_resource type="ArrayMesh" uid="uid://c6rj2d3hi0mah" path="res://critter/pumpkin.obj" id="2_036b0"]
+[ext_resource type="PackedScene" uid="uid://bnen3v6e8xqv2" path="res://critters/critter.tscn" id="1_fj7yv"]
+[ext_resource type="ArrayMesh" uid="uid://c6rj2d3hi0mah" path="res://critters/plumpkin/plumpkin_2.obj" id="2_036b0"]
 [ext_resource type="Texture2D" uid="uid://q5yxh4nib4c4" path="res://icon.svg" id="2_tlwt5"]
-[ext_resource type="ArrayMesh" uid="uid://dfofnf4ff6w2c" path="res://critter/sprout.obj" id="3_036b0"]
+[ext_resource type="ArrayMesh" uid="uid://dfofnf4ff6w2c" path="res://critters/plumpkin/plumpkin_1.obj" id="3_036b0"]
 [ext_resource type="Script" uid="uid://beja3ni6vyqgd" path="res://player.gd" id="4_aqk2v"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_aqk2v"]
