@@ -3,16 +3,13 @@
 [ext_resource type="Script" uid="uid://bxwx3sy3oo3rj" path="res://critter/critter.gd" id="1_7qwah"]
 [ext_resource type="AudioStream" uid="uid://byit7avap3ofs" path="res://critter/critter_meow.wav" id="3_whphh"]
 [ext_resource type="AudioStream" uid="uid://craijl2hx42l0" path="res://critter/critter_growth.wav" id="4_aqmuy"]
+[ext_resource type="ArrayMesh" uid="uid://bwir1iu44ak3t" path="res://critter/plant.obj" id="4_msys6"]
 [ext_resource type="Shader" uid="uid://bjhry3auj44ae" path="res://critter/critter.gdshader" id="5_y6ayy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_y6ayy"]
 radius = 0.25
 
-[sub_resource type="SphereMesh" id="SphereMesh_ia0t7"]
-radius = 0.25
-height = 0.5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kscb4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kn85f"]
 render_priority = 0
 shader = ExtResource("5_y6ayy")
 shader_parameter/transparent = false
@@ -38,5 +35,6 @@ attenuation_model = 3
 [node name="Body" type="MeshInstance3D" parent="."]
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_ia0t7")
-surface_material_override/0 = SubResource("ShaderMaterial_kscb4")
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.23723263, 0)
+mesh = ExtResource("4_msys6")
+surface_material_override/0 = SubResource("ShaderMaterial_kn85f")

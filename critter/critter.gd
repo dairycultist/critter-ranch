@@ -20,6 +20,7 @@ func _ready() -> void:
 	
 	# duplicate our materials so we can modify them
 	material = $Mesh.get_active_material(0).duplicate()
+	$Mesh.set_surface_override_material(0, material)
 
 func get_hold_distance():
 	return 1.0
